@@ -4,12 +4,11 @@ import { prisma } from "~/db.server";
 
 export function getNote({
   id,
-  userId,
 }: Pick<Note, "id"> & {
   userId: User["id"];
 }) {
   return prisma.note.findFirst({
-    select: { id: true, body: true, title: true },
+    select: { id: true, body: true, title: true, userId: true },
     where: { id }, //previous id, userId
   });
 }
