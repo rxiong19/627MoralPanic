@@ -63,7 +63,7 @@ export default function ForumDetailsPage() {
                   >
                     {comment.body}
                   <br></br>
-                  -{comment.userId}
+                  -{comment.username}
                   </h3>
                 </li>
               ))}

@@ -4,11 +4,13 @@ import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
 import { createComment } from "~/models/note.server";
+import { getUserById } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
-
+  const user = await getUserById(userId);
+  const username = user.username;
   const formData = await request.formData();
   const body = formData.get("body");
   console.log(params);
@@ -24,7 +26,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
     );
   }
 
-  const comment = await createComment({ body, userId, threadId });
+  const comment = await createComment({ body, username, threadId });
 
   return redirect(`/forum/${comment.threadId}`);
 };

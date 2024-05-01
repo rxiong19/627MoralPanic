@@ -56,25 +56,24 @@ export function deleteNote({
 export function getNoteComments({threadId}: {threadId: Note['id']}) {
   return prisma.comment.findMany({
     where: { threadId },
-    select: { id: true, body: true, userId: true},
+    select: { id: true, body: true, username: true},
     orderBy: { updatedAt: "desc" },
   });
 }
 
 export function createComment({
   body,
-  userId,
+  username,
   threadId,
 }: Pick<Comment, "body"> & {
-  userId: User["id"];} &
+  username: User["username"];} &
 {threadId: Note["id"];}) {
-  console.log(threadId);
   return prisma.comment.create({
     data: {
       body,
       user: {
         connect: {
-          id: userId,
+          username: username,
         },
       },
       thread: {
