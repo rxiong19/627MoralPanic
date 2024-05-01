@@ -11,6 +11,7 @@ import {
 import invariant from "tiny-invariant";
 
 import { deleteNote, getNote, getNoteComments    } from "~/models/note.server";
+import { getUserById } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
@@ -21,8 +22,11 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   if (!note) {
     throw new Response("Not Found", { status: 404 });
   }
+  const postUser = await getUserById(note.userId);
+  const username = postUser.username;
+
   const comments = await getNoteComments({threadId: params.forumId});
-  return json({ note: note, comments: comments });
+  return json({ note: note, comments: comments, username: username });
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
@@ -40,6 +44,7 @@ export default function ForumDetailsPage() {
     <div>
       <h3 className="text-2xl font-bold">{data.note.title}</h3>
       <p className="py-6">{data.note.body}</p>
+      <p className="py-6">-{data.username}</p>
       <hr className="my-4" />
       <Form method="post">
         <button
@@ -63,7 +68,7 @@ export default function ForumDetailsPage() {
                   >
                     {comment.body}
                   <br></br>
-                  -{comment.userId}
+                  -{comment.username}
                   </h3>
                 </li>
               ))}

@@ -4,12 +4,11 @@ import { prisma } from "~/db.server";
 
 export function getNote({
   id,
-  userId,
 }: Pick<Note, "id"> & {
   userId: User["id"];
 }) {
   return prisma.note.findFirst({
-    select: { id: true, body: true, title: true },
+    select: { id: true, body: true, title: true, userId: true },
     where: { id }, //previous id, userId
   });
 }
@@ -56,25 +55,24 @@ export function deleteNote({
 export function getNoteComments({threadId}: {threadId: Note['id']}) {
   return prisma.comment.findMany({
     where: { threadId },
-    select: { id: true, body: true, userId: true},
+    select: { id: true, body: true, username: true},
     orderBy: { updatedAt: "desc" },
   });
 }
 
 export function createComment({
   body,
-  userId,
+  username,
   threadId,
 }: Pick<Comment, "body"> & {
-  userId: User["id"];} &
+  username: User["username"];} &
 {threadId: Note["id"];}) {
-  console.log(threadId);
   return prisma.comment.create({
     data: {
       body,
       user: {
         connect: {
-          id: userId,
+          username: username,
         },
       },
       thread: {
