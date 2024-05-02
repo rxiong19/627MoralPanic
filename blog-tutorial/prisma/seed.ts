@@ -14,6 +14,12 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("racheliscool", 10);
 
+  const topic = await prisma.topic.create({
+    data: {
+      title: "Main Topic"
+    }
+  });
+
   const user = await prisma.user.create({
     data: {
       email,
@@ -31,6 +37,7 @@ async function seed() {
       title: "My first note",
       body: "Hello, world!",
       userId: user.id,
+      topicId: topic.id
     },
   });
 
@@ -39,6 +46,7 @@ async function seed() {
       title: "My second note",
       body: "Hello, world!",
       userId: user.id,
+      topicId: topic.id
     },
   });
 
