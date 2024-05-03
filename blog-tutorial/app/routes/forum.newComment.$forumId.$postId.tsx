@@ -13,11 +13,8 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   const username = user.username;
   const formData = await request.formData();
   const body = formData.get("body");
-  console.log(params);
-  console.log(params.forumId);
-  console.log(params['forumId']);
-  const threadId = params['forumId'];
-  console.log(threadId);
+  const forumId = params['forumId'];
+  const threadId = params['postId'];
 
   if (typeof body !== "string" || body.length === 0) {
     return json(
@@ -26,9 +23,9 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
     );
   }
 
-  const comment = await createComment({ body, username, threadId });
+  await createComment({ body, username, threadId });
 
-  return redirect(`/forum/${comment.threadId}`);
+  return redirect(`/forum/${forumId}/${threadId}`);
 };
 
 export default function NewCommentPage() {

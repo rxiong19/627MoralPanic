@@ -1,4 +1,4 @@
-import type { User, Note, Comment } from "@prisma/client";
+import type { User, Note, Comment, Topic } from "@prisma/client";
 
 import { prisma } from "~/db.server";
 
@@ -21,12 +21,23 @@ export function getNoteListItems() {
   });
 }
 
+export function getNoteListItemsForTopic(topicId: Topic['id']) {
+  return prisma.note.findMany({
+    where: { topicId },
+    select: { id: true, title: true },
+    orderBy: { updatedAt: "desc" },
+  });
+}
+
 export function createNote({
   body,
   title,
   userId,
+  topicId
 }: Pick<Note, "body" | "title"> & {
   userId: User["id"];
+} & {
+  topicId: Topic["id"];
 }) {
   return prisma.note.create({
     data: {
@@ -37,8 +48,27 @@ export function createNote({
           id: userId,
         },
       },
+      topic: {
+        connect: {
+          id: topicId,
+        }
+      }
     },
   });
+}
+
+export function createTopic(title: string) {
+  return prisma.topic.create({
+    data: {
+      title: title
+    }
+  })
+}
+
+export function getTopics() {
+  return prisma.topic.findMany({
+    select: {id: true, title: true}
+  })
 }
 
 export function deleteNote({
@@ -49,8 +79,6 @@ export function deleteNote({
     where: { id, userId },
   });
 }
-
-
 
 export function getNoteComments({threadId}: {threadId: Note['id']}) {
   return prisma.comment.findMany({

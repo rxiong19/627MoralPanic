@@ -1,97 +1,71 @@
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import {
-  Form,
-  Link,
-  NavLink,
-  isRouteErrorResponse,
-  useLoaderData,
-  useRouteError,
-} from "@remix-run/react";
-import invariant from "tiny-invariant";
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
-import { deleteNote, getNote, getNoteComments    } from "~/models/note.server";
-import { getUserById } from "~/models/user.server";
+import { getNoteListItems, getNoteListItemsForTopic } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
+import { useUser } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  const topicId = params.forumId;
   const userId = await requireUserId(request);
-  invariant(params.forumId, "noteId not found");
-
-  const note = await getNote({ id: params.forumId, userId });
-  if (!note) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  const postUser = await getUserById(note.userId);
-  const username = postUser.username;
-
-  const comments = await getNoteComments({threadId: params.forumId});
-  return json({ note: note, comments: comments, username: username });
+  const noteListItems = await getNoteListItemsForTopic(topicId);
+  return json({ noteListItems });
 };
 
-export const action = async ({ params, request }: ActionFunctionArgs) => {
-  const userId = await requireUserId(request);
-  invariant(params.forumId, "noteId not found");
-
-  await deleteNote({ id: params.forumId, userId });
-
-  return redirect("/forum");
-};
-
-export default function ForumDetailsPage() {
+export default function ForumPage() {
   const data = useLoaderData<typeof loader>();
+  const user = useUser();
+
   return (
-    <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
-      <p className="py-6">{data.note.body}</p>
-      <p className="py-6">-{data.username}</p>
-      <hr className="my-4" />
-      <Form method="post">
-        <button
-          type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
-        >
-          Delete
-        </button>
-      </Form>
-      <Link to={`/forum/newComment/${data.note.id}`} className="block p-4 text-xl text-blue-500">
-            + New Comment
+    <div className="flex h-full min-h-screen flex-col">
+      <header className="flex items-center justify-between bg-slate-800 p-4 text-white">
+        <h1 className="text-3xl font-bold">
+          <Link to=".">Posts</Link>
+        </h1>
+        <p>{user.email}</p>
+        <Form action="/logout" method="post">
+          <button
+            type="submit"
+            className="rounded bg-slate-600 px-4 py-2 text-blue-100 hover:bg-blue-500 active:bg-blue-600"
+          >
+            Logout
+          </button>
+        </Form>
+      </header>
+
+      <main className="flex h-full bg-white">
+        <div className="h-full w-80 border-r bg-gray-50">
+          <Link to="new" className="block p-4 text-xl text-blue-500">
+            + New Post
           </Link>
-      <ol>
-              {data.comments.map((comment) => (
-                <li key={comment.id}>
-                  <h3
+
+          <hr />
+
+          {data.noteListItems.length === 0 ? (
+            <p className="p-4">No notes yet</p>
+          ) : (
+            <ol>
+              {data.noteListItems.map((note) => (
+                <li key={note.id}>
+                  <NavLink
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                     }
-                    to={comment.id}
+                    to={note.id}
                   >
-                    {comment.body}
-                  <br></br>
-                  -{comment.username}
-                  </h3>
+                    📝 {note.title}
+                  </NavLink>
                 </li>
               ))}
             </ol>
+          )}
+        </div>
+
+        <div className="flex-1 p-6">
+          <Outlet />
+        </div>
+      </main>
     </div>
-    
   );
-}
-
-export function ErrorBoundary() {
-  const error = useRouteError();
-
-  if (error instanceof Error) {
-    return <div>An unexpected error occurred: {error.message}</div>;
-  }
-
-  if (!isRouteErrorResponse(error)) {
-    return <h1>Unknown Error</h1>;
-  }
-
-  if (error.status === 404) {
-    return <div>Note not found</div>;
-  }
-
-  return <div>An unexpected error occurred: {error.statusText}</div>;
 }
