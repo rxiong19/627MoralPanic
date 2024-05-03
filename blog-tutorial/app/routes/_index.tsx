@@ -31,6 +31,10 @@ export default function Index() {
                 project deployed.
               </p>
               <div className="mx-auto mt-10 max-w-sm sm:flex sm:max-w-none sm:justify-center">
+              <div className="flex-col"><Link to="/resources"
+                  className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-yellow-700 shadow-sm hover:bg-yellow-50 sm:px-8">
+                    View Resources
+                  </Link>
                 {user ? (
                   // <Link
                   //   to="/notes"
@@ -61,7 +65,7 @@ export default function Index() {
                     </Link>
                   </div>
                 )}
-              </div>
+              </div></div>
               <a href="https://remix.run">
                 <img
                   src="https://user-images.githubusercontent.com/1500684/158298926-e45dafff-3544-4b69-96d6-d3bcc33fc76a.svg"
