@@ -20,6 +20,24 @@ async function seed() {
     }
   });
 
+  await prisma.topic.create({
+    data: {
+      title: "Topic 2"
+    }
+  });
+
+  await prisma.topic.create({
+    data: {
+      title: "Cute cats"
+    } 
+  });
+
+  await prisma.topic.create({
+    data: {
+      title: "Leftist Qanon!"
+    }
+  });
+
   const user = await prisma.user.create({
     data: {
       email,

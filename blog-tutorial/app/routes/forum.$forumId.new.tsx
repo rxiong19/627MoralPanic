@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { createNote } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ params, request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
 
   const formData = await request.formData();
@@ -27,9 +27,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
-  const note = await createNote({ body, title, userId });
+  const topicId = params.forumId;
 
-  return redirect(`/forum/${note.id}`);
+  const note = await createNote({ body, title, userId, topicId });
+
+  return redirect(`/forum/${params.forumId}/${note.id}`);
 };
 
 export default function NewForumPage() {

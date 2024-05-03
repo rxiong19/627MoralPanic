@@ -18,6 +18,7 @@ model User {
   password Password?
   notes    Note[]
   comments Comment[]
+  admin    Boolean @default(false)
 }
 
 model Password {

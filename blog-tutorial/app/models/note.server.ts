@@ -65,6 +65,12 @@ export function createTopic(title: string) {
   })
 }
 
+export function getTopics() {
+  return prisma.topic.findMany({
+    select: {id: true, title: true}
+  })
+}
+
 export function deleteNote({
   id,
   userId,
