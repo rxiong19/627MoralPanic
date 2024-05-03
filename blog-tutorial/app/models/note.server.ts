@@ -21,7 +21,7 @@ export function getNoteListItems() {
   });
 }
 
-export function getNoteListItemsforTopic(topicId: Topic['id']) {
+export function getNoteListItemsForTopic(topicId: Topic['id']) {
   return prisma.note.findMany({
     where: { topicId },
     select: { id: true, title: true },
