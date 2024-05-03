@@ -5,15 +5,17 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 
 import { useUser } from "~/utils";
 import { getTopics } from "~/models/note.server";
+import { requireUserId } from "~/session.server";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  const userId = await requireUserId(request);
   const topics = await getTopics();
   return json(topics);
 };
 
 const SelectionPage = () => {
-  const user = useUser();
   const data = useLoaderData<typeof loader>();
+  const user = useUser();
 
   return (
     <div>
