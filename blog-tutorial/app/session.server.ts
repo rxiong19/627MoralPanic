@@ -54,6 +54,24 @@ export async function requireUserId(
   return userId;
 }
 
+export async function requireAdmin(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname,
+) {
+  const userId = await getUserId(request);
+  if (!userId) {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/login?${searchParams}`);
+  }
+  const user = await getUserById(userId);
+  const admin = user.admin;
+  if (!admin) {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/selection?${searchParams}`);
+  }
+  return userId;
+}
+
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 
