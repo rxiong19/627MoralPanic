@@ -1,6 +1,7 @@
 import type { User, Note, Comment, Topic } from "@prisma/client";
 
 import { prisma } from "~/db.server";
+import { userIsAdmin } from "./user.server";
 
 export function getNote({
   id,
@@ -25,16 +26,17 @@ export function getNoteListItemsForTopic(topicId: Topic['id']) {
   return prisma.note.findMany({
     where: { topicId },
     select: { id: true, title: true },
-    orderBy: { updatedAt: "desc" },
+    orderBy: [{priority: "desc"}, { updatedAt: "desc" }],
   });
 }
 
-export function createNote({
+export async function createNote({
   body,
   title,
   userId,
-  topicId
-}: Pick<Note, "body" | "title"> & {
+  topicId,
+  priority
+}: Pick<Note, "body" | "title" | "priority"> & {
   userId: User["id"];
 } & {
   topicId: Topic["id"];
@@ -52,7 +54,8 @@ export function createNote({
         connect: {
           id: topicId,
         }
-      }
+      },
+      priority: priority,
     },
   });
 }
