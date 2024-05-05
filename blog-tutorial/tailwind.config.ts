@@ -8,6 +8,8 @@ export default {
         customGreen: "#33cc33",
         lightGreen: "#ccff99",
         customRed: "#d27351",
+        hoverRed: "#a24a2a",
+        lightRed: "##e09d85",
       }
     },
   },

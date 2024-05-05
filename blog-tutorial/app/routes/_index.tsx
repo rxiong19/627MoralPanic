@@ -13,7 +13,7 @@ export default function Index() {
       <Form action="/logout" method="post">
           <button
             type="submit"
-            className="flex rounded bg-customRed px-4 py-2 text-blue-100 absolute top-0 right-0 m-4"
+            className="flex rounded bg-customRed hover:bg-hoverRed px-4 py-2 text-blue-100 absolute top-0 right-0 m-4"
           >
             Logout
           </button>

@@ -8,7 +8,6 @@ import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-    console.log('action performed');
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);
     if (isAdmin) {
@@ -27,7 +26,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 };
 
 export default function NewTopic() {
-    console.log('this part worked');
     const actionData = useActionData<typeof action>();
     const titleRef = useRef<HTMLInputElement>(null);
 
