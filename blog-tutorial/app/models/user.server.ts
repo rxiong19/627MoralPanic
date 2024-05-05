@@ -30,7 +30,7 @@ export async function getUnapprovedUsers() {
   });
 }
 
-export async function createUser(email: User["email"], username: string, password: string) {
+export async function createUser(email: User["email"], username: string, password: string, essay1: string, essay2: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
@@ -42,6 +42,8 @@ export async function createUser(email: User["email"], username: string, passwor
           hash: hashedPassword,
         },
       },
+      essay1: essay1,
+      essay2: essay2
     },
   });
 }

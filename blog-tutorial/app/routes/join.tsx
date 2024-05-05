@@ -20,13 +20,15 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const email = formData.get("email");
-  const username = formData.get("username"); 
+  const username = formData.get("username");
   const password = formData.get("password");
+  const essay1 = formData.get("essay1");
+  const essay2 = formData.get("essay2");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   if (!validateEmail(email)) {
     return json(
-      { errors: { email: "Email is invalid", password: null } },
+      { errors: { email: "Email is invalid", username: null, password: null } },
       { status: 400 },
     );
   }
@@ -78,7 +80,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     );
   }
 
-  const user = await createUser(email, username, password);
+  const user = await createUser(email, username, password, essay1, essay2);
 
   return createUserSession({
     redirectTo,
@@ -97,6 +99,8 @@ export default function Join() {
   const emailRef = useRef<HTMLInputElement>(null);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const essay1Ref = useRef<HTMLTextAreaElement>(null);
+  const essay2Ref = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (actionData?.errors?.email) {
@@ -104,6 +108,10 @@ export default function Join() {
     } else if (actionData?.errors?.username) {
       usernameRef.current?.focus();
     } else if (actionData?.errors?.password) {
+      passwordRef.current?.focus();
+    } else if (actionData?.errors?.essay1) {
+      passwordRef.current?.focus();
+    } else if (actionData?.errors?.essay2) {
       passwordRef.current?.focus();
     }
   }, [actionData]);
@@ -191,6 +199,56 @@ export default function Join() {
               {actionData?.errors?.password ? (
                 <div className="pt-1 text-red-700" id="password-error">
                   {actionData.errors.password}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="essay1"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Question 1
+            </label>
+            <div className="mt-1">
+              <textarea
+                id="essay1"
+                ref={essay1Ref}
+                name="essay1"
+                autoComplete="First answer"
+                aria-invalid={actionData?.errors?.essay1 ? true : undefined}
+                aria-describedby="essay1-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+              {actionData?.errors?.essay1 ? (
+                <div className="pt-1 text-red-700" id="essay1-error">
+                  {actionData.errors.essay1}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="essay2"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Question 2
+            </label>
+            <div className="mt-1">
+              <textarea
+                id="essay2"
+                ref={essay2Ref}
+                name="essay2"
+                autoComplete="Second answer"
+                aria-invalid={actionData?.errors?.essay2 ? true : undefined}
+                aria-describedby="essay2-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+              {actionData?.errors?.essay2 ? (
+                <div className="pt-1 text-red-700" id="essay2-error">
+                  {actionData.errors.essay2}
                 </div>
               ) : null}
             </div>
