@@ -5,6 +5,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { approveNote } from "~/models/note.server";
 import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
+import MenuBar from "./menubar";
+import { useUser } from "~/utils";
 
 export const loader = async ({ params, request }: ActionFunctionArgs) => {
     const userId = await requireUserId(request);
@@ -22,11 +24,14 @@ export const loader = async ({ params, request }: ActionFunctionArgs) => {
 
 export default function ApprovedUser() {
     useLoaderData<typeof loader>();
+    const user = useUser();
 
     return (
-        <div>
-            <h1>Post approved!</h1>
-            <Link to="/approval">Return to approval</Link>
+        <>
+        <MenuBar user={user} pageTitle="Post Approved" />
+        <div className="flex justify-center items-center">
+            <Link to="/approval"><button className="flex bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-20 px-40 mt-20 rounded">Return to approval</button></Link>
         </div>
+        </>
     );
 }
