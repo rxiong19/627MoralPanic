@@ -19,6 +19,9 @@ model User {
   notes    Note[]
   comments Comment[]
   admin    Boolean @default(false)
+  approved Boolean @default(false)
+  essay1   String @default("")
+  essay2   String @default("")
 }
 
 model Password {
@@ -48,6 +51,7 @@ model Note {
   topic     Topic @relation(fields: [topicId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   topicId   String
   priority  Int @default(0)
+  approved  Boolean @default(false)
 
   comments  Comment[]
 }

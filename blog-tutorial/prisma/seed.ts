@@ -47,6 +47,8 @@ async function seed() {
           hash: hashedPassword,
         },
       },
+      admin: true,
+      approved: true,
     },
   });
 
@@ -55,7 +57,9 @@ async function seed() {
       title: "My first note",
       body: "Hello, world!",
       userId: user.id,
-      topicId: topic.id
+      topicId: topic.id,
+      priority: 1,
+      approved: true,
     },
   });
 
@@ -64,7 +68,9 @@ async function seed() {
       title: "My second note",
       body: "Hello, world!",
       userId: user.id,
-      topicId: topic.id
+      topicId: topic.id,
+      priority: 1,
+      approved: true,
     },
   });
 

@@ -3,11 +3,13 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
-import { createNote } from "~/models/note.server";
+import { createNote, createNoteAdmin } from "~/models/note.server";
+import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
+  const isAdmin = await userIsAdmin(userId);
 
   const formData = await request.formData();
   const title = formData.get("title");
@@ -28,10 +30,15 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   }
 
   const topicId = params.forumId;
+  if (isAdmin) {
+    const note = await createNoteAdmin({ body, title, userId, topicId });
+    return redirect(`/forum/${params.forumId}/${note.id}`);
+  }
+  else {
+    const note = await createNote({ body, title, userId, topicId });
+    return redirect(`/forum/${params.forumId}/${note.id}`);
+  }
 
-  const note = await createNote({ body, title, userId, topicId });
-
-  return redirect(`/forum/${params.forumId}/${note.id}`);
 };
 
 export default function NewForumPage() {
