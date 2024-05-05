@@ -1,4 +1,4 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import MenuBar from "./MenuBar";
 import type { LoaderFunctionArgs } from "@remix-run/node";
@@ -13,7 +13,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const topics = await getTopics();
   const isAdmin = await userIsAdmin(userId);
   console.log('ADMIN:', isAdmin)
-  return json({topics: topics, isAdmin: isAdmin});
+  return json({ topics: topics, isAdmin: isAdmin });
 };
 
 const SelectionPage = () => {
@@ -24,23 +24,32 @@ const SelectionPage = () => {
   console.log('ISADMIN:', isAdmin)
 
   return (
-    <div>
-      <MenuBar user={user} pageTitle="Pick your round" />
-      <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col h-screen">
+      <MenuBar user={user} pageTitle="Pick a topic" />
+      <div className="flex justify-center items-center mt-10">
         <div className="flex flex-col space-y-4">
 
-          {data.map((d: {id: string, title: string}) => (
+          {data.map((d: { id: string, title: string }) => (
             <Link key={d.id} to={`/forum/${d.id}`}>
               <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-            {d.title}
-          </button></Link>
-          ))}
-          {isAdmin ?(
-          <Link to='new'>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-              Create New Topic
+                {d.title}
               </button></Link>
-            ) : (<div></div>)}
+          ))}
+          {isAdmin ? (
+            <div className="flex flex-col space-y-4">
+              <Link to='/approval'>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
+                  Approve Users/Posts
+                </button></Link>
+              <Link to='new'>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
+                  Create New Topic
+                </button></Link>
+              <div className="flex-1 p-6">
+                <Outlet />
+              </div>
+            </div>
+          ) : (<div></div>)}
           {/* <Link to='/forum/clvpmesye0000b6gypojz4ydi'><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
             Day 1
           </button></Link>
