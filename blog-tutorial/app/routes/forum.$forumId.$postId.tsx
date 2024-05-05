@@ -3,6 +3,7 @@ import { json, redirect } from "@remix-run/node";
 import {
   Form,
   Link,
+  Outlet,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
@@ -54,14 +55,15 @@ export default function ForumDetailsPage() {
       <Form method="post">
         <button
           type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+          className="rounded bg-customRed px-4 py-2 text-white hover:bg-hoverRed focus:bg-lightRed"
         >
           Delete
         </button>
       </Form>
-      <Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-blue-500">
+      <Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-customRed">
         + New Comment
       </Link>
+      <Outlet/>
       <ol>
         {data.comments.map((comment) => (
           <li key={comment.id}>
