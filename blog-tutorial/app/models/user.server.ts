@@ -23,6 +23,13 @@ export async function getUserByUsername(username: User["username"]) {
   return prisma.user.findUnique({ where: { username } });
 }
 
+export async function getUnapprovedUsers() {
+  return prisma.user.findMany({
+    where: {approved: false},
+    select: {username: true, essay1: true, essay2: true},
+  });
+}
+
 export async function createUser(email: User["email"], username: string, password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,6 +44,17 @@ export async function createUser(email: User["email"], username: string, passwor
       },
     },
   });
+}
+
+export async function approveUser(id: User["id"]) {
+  return prisma.user.update({
+    where: {
+      id: id
+    },
+    data: {
+      approved: true
+    }
+  })
 }
 
 export async function deleteUserByEmail(email: User["email"]) {

@@ -14,9 +14,9 @@ export function getNote({
   });
 }
 
-export function getNoteListItems() {
+export function getNoteListItems({userId}: {userId: User["id"]}) {
   return prisma.note.findMany({
-    // where: { userId },
+    where: { userId },
     select: { id: true, title: true },
     orderBy: { updatedAt: "desc" },
   });
@@ -30,12 +30,58 @@ export function getNoteListItemsForTopic(topicId: Topic['id']) {
   });
 }
 
+export function getUnapprovedPosts() {
+  return prisma.note.findMany({
+    where: {approved: false},
+    select: {userId: true, title: true, body: true},
+    orderBy: {updatedAt: "desc"}
+  })
+}
+
 export async function createNote({
   body,
   title,
   userId,
+  topicId
+}: Pick<Note, "body" | "title" | "priority"> & {
+  userId: User["id"];
+} & {
+  topicId: Topic["id"];
+}) {
+  return prisma.note.create({
+    data: {
+      title,
+      body,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      topic: {
+        connect: {
+          id: topicId,
+        }
+      }
+    },
+  });
+}
+
+export async function approveNote(id: Note["id"]) {
+  return prisma.note.update({
+    where: {
+      id: id
+    },
+    data: {
+      approved: true
+    }
+  })
+}
+
+export async function createNoteAdmin({
+  body,
+  title,
+  userId,
   topicId,
-  priority
 }: Pick<Note, "body" | "title" | "priority"> & {
   userId: User["id"];
 } & {
@@ -55,7 +101,8 @@ export async function createNote({
           id: topicId,
         }
       },
-      priority: priority,
+      priority: 1,
+      approved: true,
     },
   });
 }

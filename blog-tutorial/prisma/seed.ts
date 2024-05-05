@@ -57,7 +57,8 @@ async function seed() {
       body: "Hello, world!",
       userId: user.id,
       topicId: topic.id,
-      priority: 1
+      priority: 1,
+      approved: true,
     },
   });
 
@@ -67,7 +68,8 @@ async function seed() {
       body: "Hello, world!",
       userId: user.id,
       topicId: topic.id,
-      priority: 1
+      priority: 1,
+      approved: true,
     },
   });
 

@@ -12,17 +12,17 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);
     if (isAdmin) {
-    const formData = await request.formData();
-    const title = formData.get("title");
+        const formData = await request.formData();
+        const title = formData.get("title");
 
-    if (typeof title !== "string" || title.length === 0) {
-        return json(
-            { errors: { title: "Title is required" } },
-            { status: 400 },
-        );
+        if (typeof title !== "string" || title.length === 0) {
+            return json(
+                { errors: { title: "Title is required" } },
+                { status: 400 },
+            );
+        }
+        await createTopic(title);
     }
-    await createTopic(title);
-}
     return redirect(`/selection`);
 };
 
