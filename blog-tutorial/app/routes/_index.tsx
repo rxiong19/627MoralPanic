@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 
 import { useOptionalUser } from "~/utils";
 
@@ -9,6 +9,16 @@ export default function Index() {
   const user = useOptionalUser();
   return (
     <main className="relative min-h-screen bg-lightGreen sm:flex sm:items-center sm:justify-center">
+      {user ? (
+      <Form action="/logout" method="post">
+          <button
+            type="submit"
+            className="flex rounded bg-customRed px-4 py-2 text-blue-100 absolute top-0 right-0 m-4"
+          >
+            Logout
+          </button>
+          </Form>
+      ) : (<></>)}
       <div className="relative sm:pb-16 sm:pt-8">
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-80">
           <div className="relative shadow-xl sm:overflow-hidden sm:rounded-2xl">
@@ -43,7 +53,7 @@ export default function Index() {
 
                     className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-customRed shadow-sm hover:bg-yellow-50 sm:px-8"
                   >
-                    View Notes for {user.email}
+                    View Forum
                   </Link>
                 ) : (
                   <div className="space-y-4 sm:mx-auto sm:inline-grid sm:grid-cols-2 sm:gap-5 sm:space-y-0">

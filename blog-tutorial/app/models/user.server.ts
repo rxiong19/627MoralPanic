@@ -47,7 +47,6 @@ export async function createUser(email: User["email"], username: string, passwor
 }
 
 export async function approveUser(id: User["id"]) {
-  console.log('called approve');
   return prisma.user.update({
     where: {
       id: id
