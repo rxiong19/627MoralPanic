@@ -24,7 +24,7 @@ export function getNoteListItems({ userId }: { userId: User["id"] }) {
 
 export function getNoteListItemsForTopic(topicId: Topic['id']) {
   return prisma.note.findMany({
-    where: { topicId },
+    where: { topicId, approved: true },
     select: { id: true, title: true },
     orderBy: [{ priority: "desc" }, { updatedAt: "desc" }],
   });

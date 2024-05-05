@@ -51,6 +51,12 @@ export async function requireUserId(
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
     throw redirect(`/login?${searchParams}`);
   }
+  const user = await getUserById(userId);
+  const approved = user.approved;
+  if (!approved) {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/`);
+  }
   return userId;
 }
 
