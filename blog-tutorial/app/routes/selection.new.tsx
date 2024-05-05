@@ -7,7 +7,7 @@ import { createTopic } from "~/models/note.server";
 import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
-export const action = async ({ params, request }: ActionFunctionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
     console.log('action performed');
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);

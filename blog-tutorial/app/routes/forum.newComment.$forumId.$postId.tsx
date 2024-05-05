@@ -10,22 +10,25 @@ import { requireUserId } from "~/session.server";
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
   const user = await getUserById(userId);
-  const username = user.username;
-  const formData = await request.formData();
-  const body = formData.get("body");
-  const forumId = params['forumId'];
-  const threadId = params['postId'];
+  if (user) {
+    const username = user.username;
+    const formData = await request.formData();
+    const body = formData.get("body");
+    const forumId = params['forumId'];
+    const threadId = params['postId'];
+    if (threadId) {
 
-  if (typeof body !== "string" || body.length === 0) {
-    return json(
-      { errors: { body: "Body is required", title: null } },
-      { status: 400 },
-    );
+      if (typeof body !== "string" || body.length === 0) {
+        return json(
+          { errors: { body: "Body is required", title: null } },
+          { status: 400 },
+        );
+      }
+
+      await createComment({ body, username, threadId });
+      return redirect(`/forum/${forumId}/${threadId}`);
+    }
   }
-
-  await createComment({ body, username, threadId });
-
-  return redirect(`/forum/${forumId}/${threadId}`);
 };
 
 export default function NewCommentPage() {

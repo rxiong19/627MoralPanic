@@ -1,14 +1,15 @@
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
-import MenuBar from "./MenuBar";
 import type { LoaderFunctionArgs } from "@remix-run/node";
+import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
-import { useUser } from "~/utils";
 import { getTopics } from "~/models/note.server";
-import { requireUserId } from "~/session.server";
 import { userIsAdmin } from "~/models/user.server";
+import { requireUserId } from "~/session.server";
+import { useUser } from "~/utils";
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+import MenuBar from "./menubar";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
   const topics = await getTopics();
   const isAdmin = await userIsAdmin(userId);

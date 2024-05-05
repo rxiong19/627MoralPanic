@@ -9,16 +9,18 @@ export const loader = async ({ params, request }: ActionFunctionArgs) => {
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);
     if (isAdmin) {
-        await approveUser(params.userId);
+        if (params.userId) {
+            await approveUser(params.userId);
+        }
     }
     else {
         return redirect('/selection');
     }
     return {};
-};  
+};
 
 export default function ApprovedUser() {
-    const loaderData = useLoaderData<typeof loader>();
+    useLoaderData<typeof loader>();
 
     return (
         <div>

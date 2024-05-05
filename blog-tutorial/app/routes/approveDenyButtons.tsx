@@ -1,5 +1,4 @@
 // Import necessary modules and functions
-import { useActionData } from "@remix-run/react";
 import { approveUser } from "~/models/user.server";
 
 // Define the component

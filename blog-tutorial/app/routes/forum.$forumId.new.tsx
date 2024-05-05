@@ -30,15 +30,16 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   }
 
   const topicId = params.forumId;
-  if (isAdmin) {
-    const note = await createNoteAdmin({ body, title, userId, topicId });
-    return redirect(`/forum/${params.forumId}/${note.id}`);
+  if (topicId) {
+    if (isAdmin) {
+      const note = await createNoteAdmin({ body, title, userId, topicId });
+      return redirect(`/forum/${params.forumId}/${note.id}`);
+    }
+    else {
+      const note = await createNote({ body, title, userId, topicId });
+      return redirect(`/forum/${params.forumId}/${note.id}`);
+    }
   }
-  else {
-    const note = await createNote({ body, title, userId, topicId });
-    return redirect(`/forum/${params.forumId}/${note.id}`);
-  }
-
 };
 
 export default function NewForumPage() {

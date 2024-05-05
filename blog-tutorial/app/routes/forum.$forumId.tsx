@@ -2,15 +2,17 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
-import { getNoteListItems, getNoteListItemsForTopic } from "~/models/note.server";
+import { getNoteListItemsForTopic } from "~/models/note.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const topicId = params.forumId;
-  const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItemsForTopic(topicId);
-  return json({ noteListItems });
+  if (topicId) {
+    await requireUserId(request);
+    const noteListItems = await getNoteListItemsForTopic(topicId);
+    return json({ noteListItems });
+  }
 };
 
 export default function ForumPage() {
