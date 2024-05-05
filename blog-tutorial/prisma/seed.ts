@@ -47,7 +47,8 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      admin: true
+      admin: true,
+      approved: true,
     },
   });
 

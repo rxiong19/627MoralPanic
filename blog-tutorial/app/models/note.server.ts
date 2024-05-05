@@ -14,7 +14,7 @@ export function getNote({
   });
 }
 
-export function getNoteListItems({userId}: {userId: User["id"]}) {
+export function getNoteListItems({ userId }: { userId: User["id"] }) {
   return prisma.note.findMany({
     where: { userId },
     select: { id: true, title: true },
@@ -26,15 +26,15 @@ export function getNoteListItemsForTopic(topicId: Topic['id']) {
   return prisma.note.findMany({
     where: { topicId },
     select: { id: true, title: true },
-    orderBy: [{priority: "desc"}, { updatedAt: "desc" }],
+    orderBy: [{ priority: "desc" }, { updatedAt: "desc" }],
   });
 }
 
 export function getUnapprovedPosts() {
   return prisma.note.findMany({
-    where: {approved: false},
-    select: {userId: true, title: true, body: true},
-    orderBy: {updatedAt: "desc"}
+    where: { approved: false },
+    select: { id: true, userId: true, title: true, body: true },
+    orderBy: { updatedAt: "desc" }
   })
 }
 
@@ -43,7 +43,7 @@ export async function createNote({
   title,
   userId,
   topicId
-}: Pick<Note, "body" | "title" | "priority"> & {
+}: Pick<Note, "body" | "title"> & {
   userId: User["id"];
 } & {
   topicId: Topic["id"];
@@ -82,7 +82,7 @@ export async function createNoteAdmin({
   title,
   userId,
   topicId,
-}: Pick<Note, "body" | "title" | "priority"> & {
+}: Pick<Note, "body" | "title"> & {
   userId: User["id"];
 } & {
   topicId: Topic["id"];
@@ -117,7 +117,7 @@ export function createTopic(title: string) {
 
 export function getTopics() {
   return prisma.topic.findMany({
-    select: {id: true, title: true}
+    select: { id: true, title: true }
   })
 }
 
@@ -130,10 +130,16 @@ export function deleteNote({
   });
 }
 
-export function getNoteComments({threadId}: {threadId: Note['id']}) {
+export function deleteNoteById(id: string) {
+  return prisma.note.deleteMany({
+    where: { id },
+  });
+}
+
+export function getNoteComments({ threadId }: { threadId: Note['id'] }) {
   return prisma.comment.findMany({
     where: { threadId },
-    select: { id: true, body: true, username: true},
+    select: { id: true, body: true, username: true },
     orderBy: { updatedAt: "desc" },
   });
 }
@@ -143,8 +149,9 @@ export function createComment({
   username,
   threadId,
 }: Pick<Comment, "body"> & {
-  username: User["username"];} &
-{threadId: Note["id"];}) {
+  username: User["username"];
+} &
+  { threadId: Note["id"]; }) {
   return prisma.comment.create({
     data: {
       body,

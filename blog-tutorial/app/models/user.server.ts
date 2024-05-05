@@ -26,7 +26,7 @@ export async function getUserByUsername(username: User["username"]) {
 export async function getUnapprovedUsers() {
   return prisma.user.findMany({
     where: {approved: false},
-    select: {username: true, essay1: true, essay2: true},
+    select: {id: true, username: true, essay1: true, essay2: true},
   });
 }
 
@@ -47,6 +47,7 @@ export async function createUser(email: User["email"], username: string, passwor
 }
 
 export async function approveUser(id: User["id"]) {
+  console.log('called approve');
   return prisma.user.update({
     where: {
       id: id
@@ -59,6 +60,10 @@ export async function approveUser(id: User["id"]) {
 
 export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
+}
+
+export async function deleteUserById(id: User["id"]) {
+  return prisma.user.delete({ where: { id } });
 }
 
 export async function verifyLogin(
