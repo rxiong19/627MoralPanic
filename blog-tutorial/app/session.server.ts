@@ -52,12 +52,18 @@ export async function requireUserId(
     throw redirect(`/login?${searchParams}`);
   }
   const user = await getUserById(userId);
-  const approved = user.approved;
-  if (!approved) {
-    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-    throw redirect(`/`);
+  if (user) {
+    const approved = user.approved;
+    if (!approved) {
+      const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+      throw redirect(`/${searchParams}`);
+    }
+    return userId;
   }
-  return userId;
+  else {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/${searchParams}`);
+  }
 }
 
 export async function requireAdmin(
@@ -70,12 +76,17 @@ export async function requireAdmin(
     throw redirect(`/login?${searchParams}`);
   }
   const user = await getUserById(userId);
-  const admin = user.admin;
-  if (!admin) {
+  if (user) {
+    const admin = user.admin;
+    if (!admin) {
+      const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+      throw redirect(`/selection?${searchParams}`);
+    }
+    return userId;
+  } else {
     const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
-    throw redirect(`/selection?${searchParams}`);
+    throw redirect(`/login?${searchParams}`);
   }
-  return userId;
 }
 
 export async function requireUser(request: Request) {

@@ -1,8 +1,8 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { approveNote } from "~/models/note.server";
 
+import { approveNote } from "~/models/note.server";
 import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
@@ -10,16 +10,18 @@ export const loader = async ({ params, request }: ActionFunctionArgs) => {
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);
     if (isAdmin) {
-        await approveNote(params.noteId);
+        if (params.noteId) {
+            await approveNote(params.noteId);
+        }
     }
     else {
         return redirect('/selection');
     }
     return {};
-};  
+};
 
 export default function ApprovedUser() {
-    const loaderData = useLoaderData<typeof loader>();
+    useLoaderData<typeof loader>();
 
     return (
         <div>

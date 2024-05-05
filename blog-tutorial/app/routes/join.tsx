@@ -19,37 +19,37 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
-  const email = formData.get("email");
-  const username = formData.get("username");
-  const password = formData.get("password");
-  const essay1 = formData.get("essay1");
-  const essay2 = formData.get("essay2");
+  const email = formData.get("email") as string;
+  const username = formData.get("username") as string;
+  const password = formData.get("password") as string;
+  const essay1 = formData.get("essay1") as string;
+  const essay2 = formData.get("essay2") as string;
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   if (!validateEmail(email)) {
     return json(
-      { errors: { email: "Email is invalid", username: null, password: null } },
+      { errors: { email: "Email is invalid", username: null, password: null, essay1: null, essay2: null } },
       { status: 400 },
     );
   }
 
   if (typeof username !== "string" || username.length === 0) {
     return json(
-      { errors: { email: null, usernname: "Username is required", password: null } },
+      { errors: { email: null, username: "Username is required", password: null, essay1: null, essay2: null } },
       { status: 400 },
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json(
-      { errors: { email: null, password: "Password is required" } },
+      { errors: { email: null, username: null, password: "Password is required", essay1: null, essay2: null } },
       { status: 400 },
     );
   }
 
   if (password.length < 8) {
     return json(
-      { errors: { email: null, password: "Password is too short" } },
+      { errors: { email: null, username: null, password: "Password is too short", essay1: null, essay2: null } },
       { status: 400 },
     );
   }
@@ -60,7 +60,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       {
         errors: {
           email: "A user already exists with this username",
-          password: null,
+          username: null,
+          password: null, essay1: null, essay2: null
         },
       },
       { status: 400 },
@@ -73,13 +74,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       {
         errors: {
           email: "A user already exists with this email",
-          password: null,
+          username: null,
+          password: null, essay1: null, essay2: null
         },
       },
       { status: 400 },
     );
   }
-
   const user = await createUser(email, username, password, essay1, essay2);
 
   return createUserSession({

@@ -6,16 +6,16 @@
 
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
-import { approveNote, getNoteListItems, getNoteListItemsForTopic, getUnapprovedPosts } from "~/models/note.server";
-import { approveUser, getUnapprovedUsers, userIsAdmin } from "~/models/user.server";
+import { getUnapprovedPosts } from "~/models/note.server";
+import { getUnapprovedUsers, userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
-import MenuBar from "./MenuBar";
-import { UserApprovalButton } from "./approveDenyButtons";
 
-export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+import MenuBar from "./menubar";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
     const userId = await requireUserId(request);
     const isAdmin = await userIsAdmin(userId);
     if (!isAdmin) {
@@ -29,17 +29,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
 export default function ApprovalPage() {
     const data = useLoaderData<typeof loader>();
     const user = useUser();
-    const handleApproval = async (type: string, id: string) => {
-        try {
-            if (type === 'user') {
-                await approveUser(id);
-            } else if (type === 'note') {
-                await approveNote(id);
-            }
-        } catch (error) {
-            console.error('Error handling approval:', error);
-        }
-    };
     return (
         <div className="flex flex-col h-screen">
             <MenuBar user={user} pageTitle="Approve Users and Posts" />

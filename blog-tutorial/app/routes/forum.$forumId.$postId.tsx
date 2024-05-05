@@ -3,14 +3,13 @@ import { json, redirect } from "@remix-run/node";
 import {
   Form,
   Link,
-  NavLink,
   isRouteErrorResponse,
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import { deleteNote, getNote, getNoteComments    } from "~/models/note.server";
+import { deleteNote, getNote, getNoteComments } from "~/models/note.server";
 import { getUserById } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
@@ -23,9 +22,15 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     throw new Response("Not Found", { status: 404 });
   }
   const postUser = await getUserById(note.userId);
-  const username = postUser.username;
+  let username;
+  if (postUser) {
+    username = postUser.username;
+  }
+  else {
+    username = '';
+  }
 
-  const comments = await getNoteComments({threadId: params.postId});
+  const comments = await getNoteComments({ threadId: params.postId });
   return json({ note: note, comments: comments, username: username, topic: params.forumId });
 };
 
@@ -55,26 +60,24 @@ export default function ForumDetailsPage() {
         </button>
       </Form>
       <Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-blue-500">
-            + New Comment
-          </Link>
+        + New Comment
+      </Link>
       <ol>
-              {data.comments.map((comment) => (
-                <li key={comment.id}>
-                  <h3
-                    className={({ isActive }) =>
-                      `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
-                    }
-                    to={comment.id}
-                  >
-                    {comment.body}
-                  <br></br>
-                  -{comment.username}
-                  </h3>
-                </li>
-              ))}
-            </ol>
+        {data.comments.map((comment) => (
+          <li key={comment.id}>
+            <h3
+              className={`block border-b p-4 text-xl bg-white`
+              }
+            >
+              {comment.body}
+              <br></br>
+              -{comment.username}
+            </h3>
+          </li>
+        ))}
+      </ol>
     </div>
-    
+
   );
 }
 

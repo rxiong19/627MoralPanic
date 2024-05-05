@@ -1,7 +1,9 @@
-import React, { useState } from "react";
 import { NavLink, Form } from "@remix-run/react";
+import { useState } from "react";
 
-const MenuBar = ({ user, pageTitle }) => {
+import { User } from "~/models/user.server";
+
+const MenuBar = ({ user, pageTitle }: {user: User, pageTitle: string}) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

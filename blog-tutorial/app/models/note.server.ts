@@ -1,7 +1,6 @@
 import type { User, Note, Comment, Topic } from "@prisma/client";
 
 import { prisma } from "~/db.server";
-import { userIsAdmin } from "./user.server";
 
 export function getNote({
   id,

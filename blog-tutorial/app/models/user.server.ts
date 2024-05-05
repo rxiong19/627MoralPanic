@@ -11,8 +11,11 @@ export async function getUserById(id: User["id"]) {
 
 export async function userIsAdmin(id: User["id"]) {
   const user = await getUserById(id);
-  const isAdmin = user.admin;
-  return isAdmin;
+  if (user) {
+    const isAdmin = user.admin;
+    return isAdmin;
+  }
+  return false;
 }
 
 export async function getUserByEmail(email: User["email"]) {
@@ -25,8 +28,8 @@ export async function getUserByUsername(username: User["username"]) {
 
 export async function getUnapprovedUsers() {
   return prisma.user.findMany({
-    where: {approved: false},
-    select: {id: true, username: true, essay1: true, essay2: true},
+    where: { approved: false },
+    select: { id: true, username: true, essay1: true, essay2: true },
   });
 }
 
