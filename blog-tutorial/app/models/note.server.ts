@@ -8,7 +8,7 @@ export function getNote({
   userId: User["id"];
 }) {
   return prisma.note.findFirst({
-    select: { id: true, body: true, title: true, userId: true },
+    select: { id: true, body: true, title: true, userId: true, image: true },
     where: { id }, //previous id, userId
   });
 }
@@ -119,6 +119,38 @@ export async function createNoteAdmin({
     data: {
       title,
       body,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      topic: {
+        connect: {
+          id: topicId,
+        },
+      },
+      priority: 1,
+      approved: true,
+    },
+  });
+}
+
+export async function createImageNoteAdmin({
+  body,
+  title,
+  image,
+  userId,
+  topicId,
+}: Pick<Note, "body" | "title" | "image"> & {
+  userId: User["id"];
+} & {
+  topicId: Topic["id"];
+}) {
+  return prisma.note.create({
+    data: {
+      title,
+      body,
+      image,
       user: {
         connect: {
           id: userId,

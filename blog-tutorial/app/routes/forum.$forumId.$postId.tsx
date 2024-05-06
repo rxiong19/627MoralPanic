@@ -8,6 +8,7 @@ import {
   useLoaderData,
   useRouteError,
 } from "@remix-run/react";
+import { useState } from "react";
 import invariant from "tiny-invariant";
 
 import { deleteNote, getNote, getNoteComments } from "~/models/note.server";
@@ -30,7 +31,6 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   else {
     username = '';
   }
-
   const comments = await getNoteComments({ threadId: params.postId });
   return json({ note: note, comments: comments, username: username, topic: params.forumId });
 };
@@ -46,9 +46,14 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 
 export default function ForumDetailsPage() {
   const data = useLoaderData<typeof loader>();
+  // const height = window.innerHeight;
   return (
     <div>
-      <h3 className="text-2xl font-bold">{data.note.title}</h3>
+      <h3 className="text-2xl font-bold">{data.note.title}</h3> 
+      {data.note.image !== null && data.note.image !== undefined && data.note.image.length > 0 ? (
+        <img src={`${data.note.image}`} alt={`${data.note.image}`} className="max-h-[500px]" ></img>
+      ): ( <></>
+      )}
       <p className="py-6">{data.note.body}</p>
       <p className="py-6">-{data.username}</p>
       <hr className="my-4" />
@@ -63,7 +68,7 @@ export default function ForumDetailsPage() {
       <Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-customRed">
         + New Comment
       </Link>
-      <Outlet/>
+      <Outlet />
       <ol>
         {data.comments.map((comment) => (
           <li key={comment.id}>
