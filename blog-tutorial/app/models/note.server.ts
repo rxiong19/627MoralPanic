@@ -135,6 +135,38 @@ export async function createNoteAdmin({
   });
 }
 
+export async function createImageNoteAdmin({
+  body,
+  title,
+  image,
+  userId,
+  topicId,
+}: Pick<Note, "body" | "title" | "image"> & {
+  userId: User["id"];
+} & {
+  topicId: Topic["id"];
+}) {
+  return prisma.note.create({
+    data: {
+      title,
+      body,
+      image,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      topic: {
+        connect: {
+          id: topicId,
+        },
+      },
+      priority: 1,
+      approved: true,
+    },
+  });
+}
+
 export function createTopic(title: string) {
   return prisma.topic.create({
     data: {
