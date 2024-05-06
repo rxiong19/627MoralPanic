@@ -80,8 +80,8 @@ export default function LoginPage() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
+    <div className="flex min-h-full flex-col justify-center bg-lightGreen">
+      <div className="mx-auto w-full max-w-md px-8 relative z-20 bg-white bg-opacity-80 rounded-lg p-8 shadow-md">
         <Form method="post" className="space-y-6">
           <div>
             <label
@@ -141,7 +141,7 @@ export default function LoginPage() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-customRed px-4 py-2 text-white hover:bg-red-600 focus:bg-red-400"
+            className="w-full rounded bg-customRed px-4 py-2 text-white hover:bg-lightGreen hover:text-gray-600 focus:bg-red-400"
           >
             Log in
           </button>
@@ -184,6 +184,13 @@ export default function LoginPage() {
             </div>
           </div>
         </Form>
+      </div>
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center z-10 pointer-events-none">
+        <img
+          className="absolute inset-0 object-cover w-full h-full opacity-60"
+          src="images/moralDiscoLogo.png"
+          alt="Wolf approaching Little Red Riding Hood"
+        />
       </div>
     </div>
   );
