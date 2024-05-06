@@ -16,14 +16,15 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
-  notes    Note[]
-  comments Comment[]
-  admin    Boolean @default(false)
-  approved Boolean @default(false)
-  essay1   String @default("")
-  essay2   String @default("")
-  essay3   String @default("")
-  essay4   String @default("")
+  notes       Note[]
+  comments    Comment[]
+  admin       Boolean @default(false)
+  approved    Boolean @default(false)
+  essay1      String @default("")
+  essay2      String @default("")
+  essay3      String @default("")
+  essay4      String @default("")
+  socialMedia String @default("")
 }
 
 model Password {
