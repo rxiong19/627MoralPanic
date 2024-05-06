@@ -7,7 +7,11 @@ import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useSearchParams } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
-import { createUser, getUserByEmail, getUserByUsername } from "~/models/user.server";
+import {
+  createUser,
+  getUserByEmail,
+  getUserByUsername,
+} from "~/models/user.server";
 import { createUserSession, getUserId } from "~/session.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
@@ -28,28 +32,60 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   if (!validateEmail(email)) {
     return json(
-      { errors: { email: "Email is invalid", username: null, password: null, essay1: null, essay2: null } },
+      {
+        errors: {
+          email: "Email is invalid",
+          username: null,
+          password: null,
+          essay1: null,
+          essay2: null,
+        },
+      },
       { status: 400 },
     );
   }
 
   if (typeof username !== "string" || username.length === 0) {
     return json(
-      { errors: { email: null, username: "Username is required", password: null, essay1: null, essay2: null } },
+      {
+        errors: {
+          email: null,
+          username: "Username is required",
+          password: null,
+          essay1: null,
+          essay2: null,
+        },
+      },
       { status: 400 },
     );
   }
 
   if (typeof password !== "string" || password.length === 0) {
     return json(
-      { errors: { email: null, username: null, password: "Password is required", essay1: null, essay2: null } },
+      {
+        errors: {
+          email: null,
+          username: null,
+          password: "Password is required",
+          essay1: null,
+          essay2: null,
+        },
+      },
       { status: 400 },
     );
   }
 
   if (password.length < 8) {
     return json(
-      { errors: { email: null, username: null, password: "Password is too short", essay1: null, essay2: null } },
+      {
+        errors: {
+          email: null,
+          username: null,
+          password: "Password is too short",
+          essay1: null,
+          essay2: null,
+        },
+      },
       { status: 400 },
     );
   }
@@ -61,7 +97,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         errors: {
           email: "A user already exists with this username",
           username: null,
-          password: null, essay1: null, essay2: null
+          password: null,
+          essay1: null,
+          essay2: null,
         },
       },
       { status: 400 },
@@ -75,7 +113,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         errors: {
           email: "A user already exists with this email",
           username: null,
-          password: null, essay1: null, essay2: null
+          password: null,
+          essay1: null,
+          essay2: null,
         },
       },
       { status: 400 },
@@ -258,7 +298,7 @@ export default function Join() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-customRed px-4 py-2 text-white hover:bg-red-600 focus:bg-red-400"
           >
             Create Account
           </button>
@@ -273,6 +313,16 @@ export default function Join() {
                 }}
               >
                 Log in
+              </Link>{" "}
+              OR{" "}
+              <Link
+                className="text-blue-500 underline"
+                to={{
+                  pathname: "/",
+                  search: searchParams.toString(),
+                }}
+              >
+                Back to Home
               </Link>
             </div>
           </div>

@@ -21,7 +21,7 @@ export function getNoteListItems({ userId }: { userId: User["id"] }) {
   });
 }
 
-export function getNoteListItemsForTopic(topicId: Topic['id']) {
+export function getNoteListItemsForTopic(topicId: Topic["id"]) {
   return prisma.note.findMany({
     where: { topicId, approved: true },
     select: { id: true, title: true },
@@ -33,15 +33,15 @@ export function getUnapprovedPosts() {
   return prisma.note.findMany({
     where: { approved: false },
     select: { id: true, userId: true, title: true, body: true },
-    orderBy: { updatedAt: "desc" }
-  })
+    orderBy: { updatedAt: "desc" },
+  });
 }
 
 export async function createNote({
   body,
   title,
   userId,
-  topicId
+  topicId,
 }: Pick<Note, "body" | "title"> & {
   userId: User["id"];
 } & {
@@ -59,8 +59,37 @@ export async function createNote({
       topic: {
         connect: {
           id: topicId,
-        }
-      }
+        },
+      },
+    },
+  });
+}
+export async function createImageNote({
+  body,
+  title,
+  image,
+  userId,
+  topicId,
+}: Pick<Note, "body" | "title" | "image"> & {
+  userId: User["id"];
+} & {
+  topicId: Topic["id"];
+}) {
+  return prisma.note.create({
+    data: {
+      title,
+      body,
+      image,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      topic: {
+        connect: {
+          id: topicId,
+        },
+      },
     },
   });
 }
@@ -68,12 +97,12 @@ export async function createNote({
 export async function approveNote(id: Note["id"]) {
   return prisma.note.update({
     where: {
-      id: id
+      id: id,
     },
     data: {
-      approved: true
-    }
-  })
+      approved: true,
+    },
+  });
 }
 
 export async function createNoteAdmin({
@@ -98,7 +127,7 @@ export async function createNoteAdmin({
       topic: {
         connect: {
           id: topicId,
-        }
+        },
       },
       priority: 1,
       approved: true,
@@ -109,15 +138,15 @@ export async function createNoteAdmin({
 export function createTopic(title: string) {
   return prisma.topic.create({
     data: {
-      title: title
-    }
-  })
+      title: title,
+    },
+  });
 }
 
 export function getTopics() {
   return prisma.topic.findMany({
-    select: { id: true, title: true }
-  })
+    select: { id: true, title: true },
+  });
 }
 
 export function deleteNote({
@@ -135,7 +164,7 @@ export function deleteNoteById(id: string) {
   });
 }
 
-export function getNoteComments({ threadId }: { threadId: Note['id'] }) {
+export function getNoteComments({ threadId }: { threadId: Note["id"] }) {
   return prisma.comment.findMany({
     where: { threadId },
     select: { id: true, body: true, username: true },
@@ -149,8 +178,7 @@ export function createComment({
   threadId,
 }: Pick<Comment, "body"> & {
   username: User["username"];
-} &
-  { threadId: Note["id"]; }) {
+} & { threadId: Note["id"] }) {
   return prisma.comment.create({
     data: {
       body,
@@ -162,8 +190,8 @@ export function createComment({
       thread: {
         connect: {
           id: threadId,
-        }
-      }
+        },
+      },
     },
   });
 }
