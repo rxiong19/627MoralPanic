@@ -96,22 +96,22 @@ export default function ApprovalPage() {
                     essay4: string;
                   }) => (
                     <tr key={`row${d.username}`}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.username}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay1}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay2}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay3}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay4}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         <Link to={`/approveUser/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Approve
@@ -182,18 +182,18 @@ export default function ApprovalPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {d.userId}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">{d.title}</td>
-                      <td className="px-6 py-4 whitespace-nowrap max-w-md overflow-auto">
+                      <td className="px-6 py-4">{d.title}</td>
+                      <td className="px-6 py-4 max-w-md overflow-auto">
                         {d.body}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 ">
                         <Link to={`/approvePost/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Approve
                           </button>
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         <Link to={`/denyPost/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Deny

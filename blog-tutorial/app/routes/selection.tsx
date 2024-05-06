@@ -23,10 +23,11 @@ const SelectionPage = () => {
   const loaderData = useLoaderData<typeof loader>();
   const data = loaderData["topics"];
   let user;
-  if (data.user) {
-    user = data.user;
+  if (loaderData.user) {
+    user = loaderData.user;
   }
   const isAdmin = loaderData.isAdmin;
+  console.log(user);
 
   return (
     <div className="flex flex-col h-screen">
