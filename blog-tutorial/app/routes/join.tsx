@@ -28,6 +28,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const password = formData.get("password") as string;
   const essay1 = formData.get("essay1") as string;
   const essay2 = formData.get("essay2") as string;
+  const essay3 = formData.get("essay3") as string;
+  const essay4 = formData.get("essay4") as string;
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   if (!validateEmail(email)) {
@@ -39,6 +41,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: null,
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -54,6 +58,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: null,
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -69,6 +75,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: "Password is required",
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -84,6 +92,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: "Password is too short",
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -100,6 +110,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: null,
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -116,6 +128,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           password: null,
           essay1: null,
           essay2: null,
+          essay3: null,
+          essay4: null,
         },
       },
       { status: 400 },
@@ -142,7 +156,8 @@ export default function Join() {
   const passwordRef = useRef<HTMLInputElement>(null);
   const essay1Ref = useRef<HTMLTextAreaElement>(null);
   const essay2Ref = useRef<HTMLTextAreaElement>(null);
-
+  const essay3Ref = useRef<HTMLTextAreaElement>(null);
+  const essay4Ref = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     if (actionData?.errors?.email) {
       emailRef.current?.focus();
@@ -158,9 +173,12 @@ export default function Join() {
   }, [actionData]);
 
   return (
-    <div className="flex min-h-full flex-col justify-center">
-      <div className="mx-auto w-full max-w-md px-8">
-        <Form method="post" className="space-y-6">
+    <div className="flex min-h-screen items-center justify-center bg-lightGreen">
+      <div className="max-w-md w-full p-8 bg-white rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Create Account
+        </h2>
+        <form method="post" className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -168,26 +186,23 @@ export default function Join() {
             >
               Email address
             </label>
-            <div className="mt-1">
-              <input
-                ref={emailRef}
-                id="email"
-                required
-                // eslint-disable-next-line jsx-a11y/no-autofocus
-                autoFocus={true}
-                name="email"
-                type="email"
-                autoComplete="email"
-                aria-invalid={actionData?.errors?.email ? true : undefined}
-                aria-describedby="email-error"
-                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
-              />
-              {actionData?.errors?.email ? (
-                <div className="pt-1 text-red-700" id="email-error">
-                  {actionData.errors.email}
-                </div>
-              ) : null}
-            </div>
+            <input
+              ref={emailRef}
+              id="email"
+              required
+              autoFocus={true}
+              name="email"
+              type="email"
+              autoComplete="email"
+              aria-invalid={actionData?.errors?.email ? true : undefined}
+              aria-describedby="email-error"
+              className="w-full rounded border border-gray-300 px-3 py-2 mt-1 focus:outline-none focus:border-blue-500"
+            />
+            {actionData?.errors?.email ? (
+              <div className="text-sm text-red-700 pt-1" id="email-error">
+                {actionData.errors.email}
+              </div>
+            ) : null}
           </div>
 
           <div>
@@ -244,13 +259,12 @@ export default function Join() {
               ) : null}
             </div>
           </div>
-
           <div>
             <label
               htmlFor="essay1"
               className="block text-sm font-medium text-gray-700"
             >
-              Question 1
+              How did you find this community?
             </label>
             <div className="mt-1">
               <textarea
@@ -275,7 +289,8 @@ export default function Join() {
               htmlFor="essay2"
               className="block text-sm font-medium text-gray-700"
             >
-              Question 2
+              Please identify and discuss a moral panic that is of relevance to
+              you. (This may be a current or an historical example.)
             </label>
             <div className="mt-1">
               <textarea
@@ -294,39 +309,84 @@ export default function Join() {
               ) : null}
             </div>
           </div>
+          <div>
+            <label
+              htmlFor="essay3"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Why do you want to join this community?
+            </label>
+            <div className="mt-1">
+              <textarea
+                id="essay3"
+                ref={essay3Ref}
+                name="essay3"
+                autoComplete="Third answer"
+                aria-invalid={actionData?.errors?.essay3 ? true : undefined}
+                aria-describedby="essay3-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+              {actionData?.errors?.essay3 ? (
+                <div className="pt-1 text-red-700" id="essay2-error">
+                  {actionData.errors.essay3}
+                </div>
+              ) : null}
+            </div>
+          </div>
+          <div>
+            <label
+              htmlFor="essay4"
+              className="block text-sm font-medium text-gray-700"
+            >
+              What do you see as your potential contributions to this community?
+            </label>
+            <div className="mt-1">
+              <textarea
+                id="essay4"
+                ref={essay4Ref}
+                name="essay4"
+                autoComplete="Third answer"
+                aria-invalid={actionData?.errors?.essay4 ? true : undefined}
+                aria-describedby="essay3-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+              {actionData?.errors?.essay4 ? (
+                <div className="pt-1 text-red-700" id="essay2-error">
+                  {actionData.errors.essay4}
+                </div>
+              ) : null}
+            </div>
+          </div>
 
-          <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-customRed px-4 py-2 text-white hover:bg-red-600 focus:bg-red-400"
+            className="w-full rounded bg-customRed text-white py-2 px-4 hover:bg-lightGreen hover:text-gray-600 focus:outline-none focus:bg-red-400"
           >
             Create Account
           </button>
-          <div className="flex items-center justify-center">
-            <div className="text-center text-sm text-gray-500">
-              Already have an account?{" "}
-              <Link
-                className="text-blue-500 underline"
-                to={{
-                  pathname: "/login",
-                  search: searchParams.toString(),
-                }}
-              >
-                Log in
-              </Link>{" "}
-              OR{" "}
-              <Link
-                className="text-blue-500 underline"
-                to={{
-                  pathname: "/",
-                  search: searchParams.toString(),
-                }}
-              >
-                Back to Home
-              </Link>
-            </div>
+          <div className="text-center text-sm text-gray-500 mt-4">
+            Already have an account?{" "}
+            <Link
+              className="text-blue-500 underline"
+              to={{
+                pathname: "/login",
+                search: searchParams.toString(),
+              }}
+            >
+              Log in
+            </Link>{" "}
+            OR{" "}
+            <Link
+              className="text-blue-500 underline"
+              to={{
+                pathname: "/",
+                search: searchParams.toString(),
+              }}
+            >
+              Back to Home
+            </Link>
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   );
