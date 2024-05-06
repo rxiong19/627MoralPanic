@@ -13,13 +13,18 @@ import invariant from "tiny-invariant";
 
 import { deleteNote, getNote, getNoteComments } from "~/models/note.server";
 import { getUserById } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { getUser, requireUserId } from "~/session.server";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
-  const userId = await requireUserId(request);
+  // const userId = await requireUserId(request);
+  const user = await getUser(request);
+  let approved = false;
+  if (user != null && user.approved) {
+    approved = true;
+  }
   invariant(params.postId, "noteId not found");
 
-  const note = await getNote({ id: params.postId, userId });
+  const note = await getNote({ id: params.postId });
   if (!note) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -32,7 +37,7 @@ export const loader = async ({ params, request }: LoaderFunctionArgs) => {
     username = '';
   }
   const comments = await getNoteComments({ threadId: params.postId });
-  return json({ note: note, comments: comments, username: username, topic: params.forumId });
+  return json({ user: user, note: note, comments: comments, username: username, topic: params.forumId, approved: approved });
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
@@ -57,6 +62,7 @@ export default function ForumDetailsPage() {
       <p className="py-6">{data.note.body}</p>
       <p className="py-6">-{data.username}</p>
       <hr className="my-4" />
+      {data.user && data.user.username == data.username ? (
       <Form method="post">
         <button
           type="submit"
@@ -65,10 +71,11 @@ export default function ForumDetailsPage() {
           Delete
         </button>
       </Form>
-      <Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-customRed">
+      ) : (<></>)}
+      {data.approved ? (
+      <><Link to={`/forum/newComment/${data.topic}/${data.note.id}`} className="block p-4 text-xl text-customRed">
         + New Comment
-      </Link>
-      <Outlet />
+      </Link> <Outlet /> </>) : (<></>)}
       <ol>
         {data.comments.map((comment) => (
           <li key={comment.id}>

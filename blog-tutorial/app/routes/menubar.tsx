@@ -12,7 +12,8 @@ const MenuBar = ({ user, pageTitle }: { user: User, pageTitle: string }) => {
         <NavLink to=".">{pageTitle}</NavLink>
       </h1>
       <div className="absolute left-1/2 text-align-center transform -translate-x-1/2 text-white">
-        <p className="px-4 py-2">{user.email}</p>
+        {user ? (<p className="px-4 py-2">{user.email}</p>) : (<p className="px-4 py-2">Not signed in</p>)}
+        
       </div>
       {/* You can add more menu items here */}
       {/* <Form action="/logout" method="post">
@@ -64,6 +65,7 @@ const MenuBar = ({ user, pageTitle }: { user: User, pageTitle: string }) => {
                 </NavLink>
               </li>
               <li>
+                {user ? (
                 <Form action="/logout" method="post">
                   <button
                     type="submit"
@@ -72,6 +74,16 @@ const MenuBar = ({ user, pageTitle }: { user: User, pageTitle: string }) => {
                     Logout
                   </button>
                 </Form>
+                ) : (
+                  <Form action="/login" method="post">
+                  <button
+                    type="submit"
+                    className="block p-2 text-lg text-red-700 hover:text-blue-700"
+                  >
+                    Login
+                  </button>
+                </Form>
+                )}
               </li>
             </ul>
           </div>
