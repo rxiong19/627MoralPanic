@@ -44,11 +44,11 @@ export default function ResourcePage() {
                 "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
             }}
             onClick={() =>
-              window.open("https://en.wikipedia.org/wiki/Moral_panic", "_blank")
+              window.open("https://michaelhobbes.substack.com/p/moral-panic-journalism", "_blank")
             }
           >
             <span className="animate-bounceIn text-blue-700 hover:underline">
-              Moral Panics
+            Moral Panic Journalism
             </span>
           </button>
         </div>
@@ -60,11 +60,97 @@ export default function ResourcePage() {
                 "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
             }}
             onClick={() =>
-              window.open("https://en.wikipedia.org/wiki/Moral_panic", "_blank")
+              window.open("https://michaelhobbes.substack.com/p/panic-on-the-editorial-page", "_blank")
             }
+            
           >
             <span className="animate-bounceIn text-blue-700 hover:underline">
-              Moral Panics 2: Electric Boogaloo
+             Panic! On the Editorial Page 
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+            style={{
+              borderImage:
+                "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
+            }}
+            onClick={() =>
+              window.open("https://michaelhobbes.substack.com/p/students-self-censorship-lol", "_blank")
+            }
+            
+          >
+            <span className="animate-bounceIn text-blue-700 hover:underline">
+            Lies, Damn Lies, and ‘Self-Censorship’ Statistics
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+            style={{
+              borderImage:
+                "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
+            }}
+            onClick={() =>
+              window.open("https://daily.jstor.org/moral-panics-a-syllabus/", "_blank")
+            }
+            
+          >
+            <span className="animate-bounceIn text-blue-700 hover:underline">
+            Moral Panics: A Syllabus
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+            style={{
+              borderImage:
+                "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
+            }}
+            onClick={() =>
+              window.open("https://www.psychologytoday.com/us/blog/wicked-deeds/201507/moral-panic-who-benefits-public-fear", "_blank")
+            }
+            
+          >
+            <span className="animate-bounceIn text-blue-700 hover:underline">
+            Moral Panics: Who Benefits from Public Fear?
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+            style={{
+              borderImage:
+                "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
+            }}
+            onClick={() =>
+              window.open("https://www.mcgill.ca/oss/article/history-did-you-know/moral-and-medical-panic-over-bicycles", "_blank")
+            }
+            
+          >
+            <span className="animate-bounceIn text-blue-700 hover:underline">
+            The Moral and Medical Panic Over Bicycles 
+            </span>
+          </button>
+        </div>
+        <div>
+          <button
+            className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+            style={{
+              borderImage:
+                "linear-gradient(to right, #3b82f6, #9333ea, #ec4899) 1",
+            }}
+            onClick={() =>
+              window.open("https://www.newstatesman.com/science-tech/2018/01/only-86-teens-ate-tide-pods-so-why-did-world-erupt-moral-panic", "_blank")
+            }
+            
+          >
+            <span className="animate-bounceIn text-blue-700 hover:underline">
+            Only 86 teens ate Tide Pods, so why did the world erupt in moral panic? 
             </span>
           </button>
         </div>
