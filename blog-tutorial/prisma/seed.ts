@@ -4,8 +4,8 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "rachel@remix.run";
-  const username = "rachel";
+  const email = "admin@moraldisco.com";
+  const username = "admin";
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
@@ -16,25 +16,31 @@ async function seed() {
 
   const topic = await prisma.topic.create({
     data: {
-      title: "Main Topic"
+      title: "Social"
     }
   });
 
   await prisma.topic.create({
     data: {
-      title: "Topic 2"
+      title: "Advice"
     }
   });
 
   await prisma.topic.create({
     data: {
-      title: "Cute cats"
+      title: "News"
     } 
   });
 
   await prisma.topic.create({
     data: {
-      title: "Leftist Qanon!"
+      title: "Investigation"
+    }
+  });
+
+  await prisma.topic.create({
+    data: {
+      title: "Organization"
     }
   });
 
@@ -55,7 +61,7 @@ async function seed() {
   await prisma.note.create({
     data: {
       title: "My first note",
-      body: "Hello, world!",
+      body: "Welcome!",
       userId: user.id,
       topicId: topic.id,
       priority: 1,
@@ -66,7 +72,7 @@ async function seed() {
   await prisma.note.create({
     data: {
       title: "My second note",
-      body: "Hello, world!",
+      body: "Have a great day!",
       userId: user.id,
       topicId: topic.id,
       priority: 1,
