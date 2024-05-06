@@ -18,7 +18,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const topics = await getTopics();
   return json({ user: user, topics: topics, isAdmin: isAdmin });
 };
- 
+
 const SelectionPage = () => {
   const loaderData = useLoaderData<typeof loader>();
   const data = loaderData["topics"];
@@ -30,20 +30,20 @@ const SelectionPage = () => {
 
   return (
     <div className="flex flex-col h-screen">
-
       <MenuBar user={user} pageTitle="Pick a topic" />
       <div
         className={`grid ${isAdmin ? "grid-cols-2" : "grid-cols-1"} gap-4 mt-10`}
       >
-        <div className="flex flex-col justify-center items-center space-y-4">
+        <div className="flex flex-col justify-center items-center space-y-4 max-w-md mx-auto">
           {data.map((d: { id: string; title: string }) => (
             <Link key={d.id} to={`/forum/${d.id}`} className="w-full">
-              <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-4 rounded w-full">
+              <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-20 rounded w-full">
                 {d.title}
               </button>
             </Link>
           ))}
         </div>
+
         {isAdmin ? (
           <div className="flex flex-col justify-center items-center space-y-4">
             <div className="w-full">

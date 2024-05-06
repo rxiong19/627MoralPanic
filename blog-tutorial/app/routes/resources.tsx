@@ -58,7 +58,7 @@ export default function ResourcePage() {
                 </td>
                 <td className="px-4 py-2">
                   <button
-                    className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+                    className="btn-link relative px-8 py-4 w-full rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
                     onClick={() =>
                       window.open(
                         "https://michaelhobbes.substack.com/p/panic-on-the-editorial-page",
@@ -109,7 +109,7 @@ export default function ResourcePage() {
                 </td>
                 <td className="px-4 py-2">
                   <button
-                    className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+                    className="btn-link relative px-8 py-4 w-full rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
                     onClick={() =>
                       window.open(
                         "https://daily.jstor.org/moral-panics-a-syllabus/",
@@ -133,7 +133,7 @@ export default function ResourcePage() {
                 </td>
                 <td className="px-4 py-2">
                   <button
-                    className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+                    className="btn-link relative px-8 py-4 w-full rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
                     onClick={() =>
                       window.open(
                         "https://www.psychologytoday.com/us/blog/wicked-deeds/201507/moral-panic-who-benefits-public-fear",
@@ -156,7 +156,7 @@ export default function ResourcePage() {
                 </td>
                 <td className="px-4 py-2">
                   <button
-                    className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+                    className="btn-link relative px-8 py-4 w-full rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
                     onClick={() =>
                       window.open(
                         "https://www.mcgill.ca/oss/article/history-did-you-know/moral-and-medical-panic-over-bicycles",
@@ -180,7 +180,7 @@ export default function ResourcePage() {
                 </td>
                 <td className="px-4 py-2">
                   <button
-                    className="btn-link relative px-8 py-4 rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
+                    className="btn-link relative px-8 py-4 w-full rounded-md border-2 transition-colors duration-300 hover:text-blue-800"
                     onClick={() =>
                       window.open(
                         "https://www.newstatesman.com/science-tech/2018/01/only-86-teens-ate-tide-pods-so-why-did-world-erupt-moral-panic",
@@ -202,10 +202,10 @@ export default function ResourcePage() {
           <h1 className="text-2xl font-bold">Book Recommendations</h1>
           <table className="min-w-full bg-white border-collapse shadow-md opacity-90 rounded-lg overflow-hidden">
             <thead>
-              <tr className="bg-customRed text-white">
+              <tr className="bg-customRed text-white opacity-60">
                 <th className="px-4 py-2 font-semibold">Type</th>
                 <th className="px-4 py-2 font-semibold">Tags</th>
-                <th className="px-4 py-2 font-semibold">Link</th>
+                <th className="px-4 py-2 font-semibold">Book</th>
               </tr>
             </thead>
             <tbody>
