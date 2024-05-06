@@ -26,11 +26,17 @@ export default function ForumPage() {
 
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
-          {data.user ? (
+          {data.user && data.user.approved ? (
             <Link to="new" className="block p-4 text-xl text-customRed">
               + New Post
             </Link>
-          ) : (<></>)}
+          ) : (
+            <>
+              <Link to="./" className="block p-4 text-xl text-customRed">
+                + New Post
+              </Link>
+            </>
+          )}
           <hr />
 
           {data.noteListItems.length === 0 ? (
