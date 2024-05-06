@@ -51,7 +51,7 @@ const MenuBar = ({ user, pageTitle }: { user: User, pageTitle: string }) => {
                   className="block p-2 text-lg text-red-700 hover:text-blue-700"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Notes
+                  Your Posts
                 </NavLink>
               </li>
               {/* Add other menu items here */}
@@ -61,7 +61,7 @@ const MenuBar = ({ user, pageTitle }: { user: User, pageTitle: string }) => {
                   className="block p-2 text-lg text-red-700 hover:text-blue-700"
                   onClick={() => setMenuOpen(false)}
                 >
-                  Selection
+                  Topics
                 </NavLink>
               </li>
               <li>
