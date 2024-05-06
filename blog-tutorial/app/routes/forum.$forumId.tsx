@@ -32,9 +32,6 @@ export default function ForumPage() {
             </Link>
           ) : (
             <>
-              <Link to="./" className="block p-4 text-xl text-customRed">
-                + New Post
-              </Link>
             </>
           )}
           <hr />
