@@ -135,8 +135,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       { status: 400 },
     );
   }
-  const user = await createUser(email, username, password, essay1, essay2);
-
+  const user = await createUser(
+    email,
+    username,
+    password,
+    essay1,
+    essay2,
+    essay3,
+    essay4,
+  );
   return createUserSession({
     redirectTo,
     remember: false,
@@ -166,9 +173,13 @@ export default function Join() {
     } else if (actionData?.errors?.password) {
       passwordRef.current?.focus();
     } else if (actionData?.errors?.essay1) {
-      passwordRef.current?.focus();
+      essay1Ref.current?.focus();
     } else if (actionData?.errors?.essay2) {
-      passwordRef.current?.focus();
+      essay2Ref.current?.focus();
+    } else if (actionData?.errors?.essay3) {
+      essay3Ref.current?.focus();
+    } else if (actionData?.errors?.essay4) {
+      essay4Ref.current?.focus();
     }
   }, [actionData]);
 
@@ -345,13 +356,13 @@ export default function Join() {
                 id="essay4"
                 ref={essay4Ref}
                 name="essay4"
-                autoComplete="Third answer"
+                autoComplete="Fourth answer"
                 aria-invalid={actionData?.errors?.essay4 ? true : undefined}
-                aria-describedby="essay3-error"
+                aria-describedby="essay4-error"
                 className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
               />
               {actionData?.errors?.essay4 ? (
-                <div className="pt-1 text-red-700" id="essay2-error">
+                <div className="pt-1 text-red-700" id="essay4-error">
                   {actionData.errors.essay4}
                 </div>
               ) : null}

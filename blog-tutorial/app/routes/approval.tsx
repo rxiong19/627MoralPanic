@@ -51,13 +51,25 @@ export default function ApprovalPage() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Essay Answer
+                    Essay Answer 1
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Essay Answer
+                    Essay Answer 2
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Essay Answer 3
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Essay Answer 4
                   </th>
                   <th
                     scope="col"
@@ -80,6 +92,8 @@ export default function ApprovalPage() {
                     username: string;
                     essay1: string;
                     essay2: string;
+                    essay3: string;
+                    essay4: string;
                   }) => (
                     <tr key={`row${d.username}`}>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -90,6 +104,12 @@ export default function ApprovalPage() {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         {d.essay2}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {d.essay3}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {d.essay4}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <Link to={`/approveUser/${d.id}`}>

@@ -22,6 +22,8 @@ model User {
   approved Boolean @default(false)
   essay1   String @default("")
   essay2   String @default("")
+  essay3   String @default("")
+  essay4   String @default("")
 }
 
 model Password {

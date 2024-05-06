@@ -29,24 +29,41 @@ export async function getUserByUsername(username: User["username"]) {
 export async function getUnapprovedUsers() {
   return prisma.user.findMany({
     where: { approved: false },
-    select: { id: true, username: true, essay1: true, essay2: true },
+    select: {
+      id: true,
+      username: true,
+      essay1: true,
+      essay2: true,
+      essay3: true,
+      essay4: true,
+    },
   });
 }
 
-export async function createUser(email: User["email"], username: string, password: string, essay1: string, essay2: string) {
+export async function createUser(
+  email: User["email"],
+  username: string,
+  password: string,
+  essay1: string,
+  essay2: string,
+  essay3: string,
+  essay4: string,
+) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   return prisma.user.create({
     data: {
-      email,
-      username,
+      email: email,
+      username: username,
       password: {
         create: {
           hash: hashedPassword,
         },
       },
       essay1: essay1,
-      essay2: essay2
+      essay2: essay2,
+      essay3: essay3,
+      essay4: essay4,
     },
   });
 }
@@ -54,12 +71,12 @@ export async function createUser(email: User["email"], username: string, passwor
 export async function approveUser(id: User["id"]) {
   return prisma.user.update({
     where: {
-      id: id
+      id: id,
     },
     data: {
-      approved: true
-    }
-  })
+      approved: true,
+    },
+  });
 }
 
 export async function deleteUserByEmail(email: User["email"]) {
