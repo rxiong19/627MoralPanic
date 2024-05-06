@@ -18,50 +18,46 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 const SelectionPage = () => {
   const loaderData = useLoaderData<typeof loader>();
-  const data = loaderData['topics']
+  const data = loaderData["topics"];
   const user = useUser();
   const isAdmin = loaderData.isAdmin;
 
   return (
     <div className="flex flex-col h-screen">
       <MenuBar user={user} pageTitle="Pick a topic" />
-      <div className="flex justify-center items-center mt-10">
+      <div
+        className={`grid ${isAdmin ? "grid-cols-2" : "grid-cols-1"} gap-4 mt-10`}
+      >
         <div className="flex flex-col justify-center items-center space-y-4">
-
-          {data.map((d: { id: string, title: string }) => (
-            <Link key={d.id} to={`/forum/${d.id}`}>
-              <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-4 rounded">
+          {data.map((d: { id: string; title: string }) => (
+            <Link key={d.id} to={`/forum/${d.id}`} className="w-full">
+              <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-4 rounded w-full">
                 {d.title}
-              </button></Link>
+              </button>
+            </Link>
           ))}
-          {isAdmin ? (
-            <div className="flex flex-col justify-center items-center space-y-4">
-              <Link to='/approval'>
-                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded">
-                  Approve Users/Posts
-                </button></Link>
-              <Link to='new'>
-                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded">
-                  Create New Topic
-                </button></Link>
-              <div className="flex-1 p-6">
-                <Outlet />
-              </div>
-            </div>
-          ) : (<div></div>)}
-          {/* <Link to='/forum/clvpmesye0000b6gypojz4ydi'><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-            Day 1
-          </button></Link>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-            Day 2
-          </button>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-            Day 3 
-          </button> 
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">
-            Day 4
-          </button> */}
         </div>
+        {isAdmin ? (
+          <div className="flex flex-col justify-center items-center space-y-4">
+            <div className="w-full">
+              <Link to="/approval" className="w-full">
+                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded w-full">
+                  Approve Users/Posts
+                </button>
+              </Link>
+            </div>
+            <div className="w-full">
+              <Link to="new" className="w-full">
+                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded w-full">
+                  Create New Topic
+                </button>
+              </Link>
+            </div>
+            <div className="flex-1 p-6">
+              <Outlet />
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

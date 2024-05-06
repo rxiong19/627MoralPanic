@@ -141,11 +141,11 @@ export default function LoginPage() {
           <input type="hidden" name="redirectTo" value={redirectTo} />
           <button
             type="submit"
-            className="w-full rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600 focus:bg-blue-400"
+            className="w-full rounded bg-customRed px-4 py-2 text-white hover:bg-red-600 focus:bg-red-400"
           >
             Log in
           </button>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
             <div className="flex items-center">
               <input
                 id="remember"
@@ -160,8 +160,8 @@ export default function LoginPage() {
                 Remember me
               </label>
             </div>
-            <div className="text-center text-sm text-gray-500">
-              Don&apos;t have an account?{" "}
+            <div className="text-center text-sm text-gray-500 space-x-2">
+              {" "}
               <Link
                 className="text-blue-500 underline"
                 to={{
@@ -170,6 +170,16 @@ export default function LoginPage() {
                 }}
               >
                 Sign up
+              </Link>{" "}
+              OR
+              <Link
+                className="text-blue-500 underline"
+                to={{
+                  pathname: "/",
+                  search: searchParams.toString(),
+                }}
+              >
+                Back to Home
               </Link>
             </div>
           </div>

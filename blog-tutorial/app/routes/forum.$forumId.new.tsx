@@ -3,7 +3,11 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
-import { createNote, createNoteAdmin } from "~/models/note.server";
+import {
+  createNote,
+  createNoteAdmin,
+  createImageNote,
+} from "~/models/note.server";
 import { userIsAdmin } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
 
@@ -14,6 +18,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const title = formData.get("title");
   const body = formData.get("body");
+  const image = formData.get("image");
 
   if (typeof title !== "string" || title.length === 0) {
     return json(
@@ -34,9 +39,17 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
     if (isAdmin) {
       const note = await createNoteAdmin({ body, title, userId, topicId });
       return redirect(`/forum/${params.forumId}/${note.id}`);
-    }
-    else {
+    } else if (image == null) {
       const note = await createNote({ body, title, userId, topicId });
+      return redirect(`/forum/${params.forumId}/${note.id}`);
+    } else {
+      const note = await createImageNote({
+        body,
+        title,
+        image,
+        userId,
+        topicId,
+      });
       return redirect(`/forum/${params.forumId}/${note.id}`);
     }
   }
