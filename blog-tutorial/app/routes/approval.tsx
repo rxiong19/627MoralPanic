@@ -75,6 +75,12 @@ export default function ApprovalPage() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
+                    Social Media Account
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
                     Approve
                   </th>
                   <th
@@ -94,6 +100,7 @@ export default function ApprovalPage() {
                     essay2: string;
                     essay3: string;
                     essay4: string;
+                    socialMedia: string;
                   }) => (
                     <tr key={`row${d.username}`}>
                       <td className="px-6 py-4">
@@ -110,6 +117,9 @@ export default function ApprovalPage() {
                       </td>
                       <td className="px-6 py-4">
                         {d.essay4}
+                      </td>
+                      <td className="px-6 py-4">
+                        {d.socialMedia}
                       </td>
                       <td className="px-6 py-4">
                         <Link to={`/approveUser/${d.id}`}>
@@ -170,7 +180,7 @@ export default function ApprovalPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200 text-center">
+              <tbody className="bg-white divide-y text-left  divide-gray-200">
                 {data["notes"].map(
                   (d: {
                     id: string;

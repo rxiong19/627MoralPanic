@@ -30,6 +30,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const essay2 = formData.get("essay2") as string;
   const essay3 = formData.get("essay3") as string;
   const essay4 = formData.get("essay4") as string;
+  const socialMedia = formData.get("socialMedia") as string;
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   if (!validateEmail(email)) {
@@ -43,6 +44,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -60,6 +62,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -77,6 +80,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -94,6 +98,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -112,6 +117,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -130,6 +136,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           essay2: null,
           essay3: null,
           essay4: null,
+          socialMedia: null,
         },
       },
       { status: 400 },
@@ -143,6 +150,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     essay2,
     essay3,
     essay4,
+    socialMedia,
   );
   return createUserSession({
     redirectTo,
@@ -165,6 +173,7 @@ export default function Join() {
   const essay2Ref = useRef<HTMLTextAreaElement>(null);
   const essay3Ref = useRef<HTMLTextAreaElement>(null);
   const essay4Ref = useRef<HTMLTextAreaElement>(null);
+  const socialMediaRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (actionData?.errors?.email) {
       emailRef.current?.focus();
@@ -364,6 +373,34 @@ export default function Join() {
               {actionData?.errors?.essay4 ? (
                 <div className="pt-1 text-red-700" id="essay4-error">
                   {actionData.errors.essay4}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div>
+            <label
+              htmlFor="socialMedia"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Please give a link to one of your social media accounts
+            </label>
+            <div className="mt-1">
+              <input
+                ref={socialMediaRef}
+                id="socialMedia"
+                required
+                // eslint-disable-next-line jsx-a11y/no-autofocus
+                autoFocus={true}
+                name="socialMedia"
+                type="socialMedia"
+                aria-invalid={actionData?.errors?.socialMedia ? true : undefined}
+                aria-describedby="socialMedia-error"
+                className="w-full rounded border border-gray-500 px-2 py-1 text-lg"
+              />
+              {actionData?.errors?.username ? (
+                <div className="pt-1 text-red-700" id="username-error">
+                  {actionData.errors.username}
                 </div>
               ) : null}
             </div>

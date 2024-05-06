@@ -36,6 +36,7 @@ export async function getUnapprovedUsers() {
       essay2: true,
       essay3: true,
       essay4: true,
+      socialMedia: true
     },
   });
 }
@@ -48,6 +49,7 @@ export async function createUser(
   essay2: string,
   essay3: string,
   essay4: string,
+  socialMedia: string
 ) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -64,6 +66,7 @@ export async function createUser(
       essay2: essay2,
       essay3: essay3,
       essay4: essay4,
+      socialMedia: socialMedia
     },
   });
 }
