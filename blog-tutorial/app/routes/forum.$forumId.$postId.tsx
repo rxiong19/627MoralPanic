@@ -61,6 +61,9 @@ export default function ForumDetailsPage() {
       )}
       <p className="py-6">{data.note.body}</p>
       <p className="py-6">-{data.username}</p>
+      {data.note.approved ? (<></>) : (
+        <p className="pt-1 text-red-700">Your post is awaiting approval by admin</p>
+      )}
       <hr className="my-4" />
       {data.user && data.user.username == data.username ? (
       <Form method="post">
