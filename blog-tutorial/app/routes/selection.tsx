@@ -4,26 +4,33 @@ import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
 import { getTopics } from "~/models/note.server";
 import { userIsAdmin } from "~/models/user.server";
-import { requireUserId } from "~/session.server";
+import { getUser, requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 
 import MenuBar from "./menubar";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const userId = await requireUserId(request);
+  const user = await getUser(request);
+  let isAdmin = false;
+  if (user) {
+    isAdmin = await userIsAdmin(user.id);
+  }
   const topics = await getTopics();
-  const isAdmin = await userIsAdmin(userId);
-  return json({ topics: topics, isAdmin: isAdmin });
+  return json({ user: user, topics: topics, isAdmin: isAdmin });
 };
-
+ 
 const SelectionPage = () => {
   const loaderData = useLoaderData<typeof loader>();
   const data = loaderData["topics"];
-  const user = useUser();
+  let user;
+  if (data.user) {
+    user = data.user;
+  }
   const isAdmin = loaderData.isAdmin;
 
   return (
     <div className="flex flex-col h-screen">
+
       <MenuBar user={user} pageTitle="Pick a topic" />
       <div
         className={`grid ${isAdmin ? "grid-cols-2" : "grid-cols-1"} gap-4 mt-10`}

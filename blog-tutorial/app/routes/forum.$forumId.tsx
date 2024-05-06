@@ -1,35 +1,36 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
 
 import { getNoteListItemsForTopic } from "~/models/note.server";
-import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
+
 import MenuBar from "./menubar";
+import { getUser } from "~/session.server";
 
 export const loader = async ({ params, request }: LoaderFunctionArgs) => {
   const topicId = params.forumId;
   if (topicId) {
-    await requireUserId(request);
+    const user = await getUser(request);
     const noteListItems = await getNoteListItemsForTopic(topicId);
-    return json({ noteListItems });
+    return json({ noteListItems, user: user });
   }
 };
 
 export default function ForumPage() {
   const data = useLoaderData<typeof loader>();
-  const user = useUser();
 
   return (
     <div className="flex h-full min-h-screen flex-col">
-      <MenuBar user={user} pageTitle="Posts"></MenuBar>
+      <MenuBar user={data.user} pageTitle="Posts"></MenuBar>
 
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
-          <Link to="new" className="block p-4 text-xl text-customRed">
-            + New Post
-          </Link>
-
+          {data.user ? (
+            <Link to="new" className="block p-4 text-xl text-customRed">
+              + New Post
+            </Link>
+          ) : (<></>)}
           <hr />
 
           {data.noteListItems.length === 0 ? (

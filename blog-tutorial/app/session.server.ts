@@ -89,6 +89,29 @@ export async function requireAdmin(
   }
 }
 
+export async function requireApproval(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname,
+) {
+  const userId = await getUserId(request);
+  if (!userId) {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/login?${searchParams}`);
+  }
+  const user = await getUserById(userId);
+  if (user) {
+    const approved = user.approved;
+    if (!approved) {
+      const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+      throw redirect(`/selection?${searchParams}`);
+    }
+    return userId;
+  } else {
+    const searchParams = new URLSearchParams([["redirectTo", redirectTo]]);
+    throw redirect(`/login?${searchParams}`);
+  }
+}
+
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request);
 

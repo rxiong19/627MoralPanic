@@ -1,11 +1,16 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { Form, useActionData } from "@remix-run/react";
+import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 
 import { createComment } from "~/models/note.server";
 import { getUserById } from "~/models/user.server";
 import { requireUserId } from "~/session.server";
+
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  await requireUserId(request);
+  return {};
+}
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   const userId = await requireUserId(request);
@@ -32,6 +37,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 };
 
 export default function NewCommentPage() {
+  useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const titleRef = useRef<HTMLInputElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
