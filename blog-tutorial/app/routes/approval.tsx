@@ -34,7 +34,7 @@ export default function ApprovalPage() {
             <MenuBar user={user} pageTitle="Approve Users and Posts" />
             <div className="flex justify-center items-center mt-10">
                 <div className="flex flex-col space-y-4">
-                    <h2 className="bg-customRed text-white font-bold py-10 px-4 rounded">Users</h2>
+                    <h2 className="bg-customRed text-white text-center font-bold py-10 px-4 rounded">Users</h2>
                     <table>
                         <thead>
                             <tr>
@@ -45,19 +45,19 @@ export default function ApprovalPage() {
                                 <th>Deny</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="text-center">
                             {data['users'].map((d: { id: string, username: string, essay1: string, essay2: string }) => (
                                 <tr key={`row${d.username}`}>
                                     <td key={`username${d.id}`}>{d.username}</td>
                                     <td key={`essay1${d.id}`}>{d.essay1}</td>
                                     <td key={`essay2${d.id}`}>{d.essay2}</td>
-                                    <td key={`approve${d.id}`}><Link to={`/approveUser/${d.id}`}><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">Approve</button></Link> </td>
-                                    <td key={`deny${d.id}`}><Link to={`/denyUser/${d.id}`}><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">Deny</button></Link></td>
+                                    <td key={`approve${d.id}`}><Link to={`/approveUser/${d.id}`}><button className="bg-customRed hover:bg-hoverRed text-white font-bold py-10 px-4 rounded">Approve</button></Link> </td>
+                                    <td key={`deny${d.id}`}><Link to={`/denyUser/${d.id}`}><button className="bg-customRed hover:bg-hoverRed text-white font-bold py-10 px-4 rounded">Deny</button></Link></td>
                                 </tr>
                             ))}
                         </tbody>
                     </table>
-                    <h2 className="bg-customRed text-white font-bold py-10 px-4 rounded">Notes</h2>
+                    <h2 className="bg-customRed text-white text-center font-bold py-10 px-4 rounded">Notes</h2>
                     <table>
                         <thead>
                             <tr>
@@ -68,14 +68,14 @@ export default function ApprovalPage() {
                                 <th>Deny</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody  className="text-center">
                             {data['notes'].map((d: { id: string, userId: string, title: string, body: string }) => (
                                 <tr key={`row${d.userId}${d.title}`}>
                                     <td key={`userId${d.id}`}>{d.userId}</td>
                                     <td key={`title${d.id}`}>{d.title}</td>
                                     <td key={`body${d.id}`}>{d.body}</td>
-                                    <td key={`approve${d.userId}${d.title}`}><Link to={`/approvePost/${d.id}`}><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">Approve</button></Link></td>
-                                    <td key={`deny${d.userId}${d.title}`}><Link to={`/denyPost/${d.id}`}><button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-10 px-4 rounded">Deny</button></Link></td>
+                                    <td key={`approve${d.userId}${d.title}`}><Link to={`/approvePost/${d.id}`}><button className="bg-customRed hover:bg-hoverRed text-white font-bold py-10 px-4 rounded">Approve</button></Link></td>
+                                    <td key={`deny${d.userId}${d.title}`}><Link to={`/denyPost/${d.id}`}><button className="bg-customRed hover:bg-hoverRed text-white font-bold py-10 px-4 rounded">Deny</button></Link></td>
                                 </tr>
                             ))}
                         </tbody>
