@@ -33,8 +33,8 @@ export default function Index() {
               <div className="absolute inset-0 bg-[color:rgba(254,204,27,0.5)] mix-blend-multiply" />
             </div>
             <div className="relative px-4 pb-8 pt-16 sm:px-6 sm:pb-14 sm:pt-24 lg:px-8 lg:pb-20 lg:pt-32">
-              <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl">
-                <span className="block uppercase text-customRed drop-shadow-md">
+              <h1 className="text-center text-6xl font-extrabold tracking-tight sm:text-8xl lg:text-9xl animate-pulse animation-delay-2000 animation-duration-3000">
+                <span className="block uppercase text-customRed drop-shadow-md animate-bounce animation-delay-2000 animation-duration-3000">
                   Moral Disco
                 </span>
               </h1>
@@ -47,11 +47,11 @@ export default function Index() {
                     View Resources
                   </Link>
                   <Link
-                        to="/selection"
-                        className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-customRed shadow-sm hover:bg-yellow-50 sm:px-8"
-                      >
-                        View Forum
-                      </Link>
+                    to="/selection"
+                    className="flex items-center justify-center rounded-md border border-transparent bg-white px-4 py-3 text-base font-medium text-customRed shadow-sm hover:bg-yellow-50 sm:px-8"
+                  >
+                    View Forum
+                  </Link>
                   {user ? (
                     user["approved"] ? (
                       <></>
