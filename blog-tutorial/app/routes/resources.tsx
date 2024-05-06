@@ -25,7 +25,7 @@ export default function ResourcePage() {
   }, []);
 
   return (
-    <div className="flex h-full min-h-screen flex-col bg-gray-200 relative overflow-hidden">
+    <div className="flex h-full min-h-screen flex-col bg-gray-200 relative">
       <header className="flex items-center justify-between bg-gray-500 p-4 text-white z-10">
         <h1 className="text-2xl font-bold">Resources</h1>
         <Link
@@ -199,10 +199,10 @@ export default function ResourcePage() {
           </table>
 
           <div className="my-8"></div>
-
+          <h1 className="text-2xl font-bold">Book Recommendations</h1>
           <table className="min-w-full bg-white border-collapse shadow-md opacity-90 rounded-lg overflow-hidden">
             <thead>
-              <tr className="bg-customGreen text-white">
+              <tr className="bg-customRed text-white">
                 <th className="px-4 py-2 font-semibold">Type</th>
                 <th className="px-4 py-2 font-semibold">Tags</th>
                 <th className="px-4 py-2 font-semibold">Link</th>
