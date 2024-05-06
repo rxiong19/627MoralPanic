@@ -51,13 +51,25 @@ export default function ApprovalPage() {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Essay Answer
+                    Essay Answer 1
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Essay Answer
+                    Essay Answer 2
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Essay Answer 3
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Essay Answer 4
                   </th>
                   <th
                     scope="col"
@@ -80,18 +92,26 @@ export default function ApprovalPage() {
                     username: string;
                     essay1: string;
                     essay2: string;
+                    essay3: string;
+                    essay4: string;
                   }) => (
                     <tr key={`row${d.username}`}>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.username}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay1}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         {d.essay2}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
+                        {d.essay3}
+                      </td>
+                      <td className="px-6 py-4">
+                        {d.essay4}
+                      </td>
+                      <td className="px-6 py-4">
                         <Link to={`/approveUser/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Approve
@@ -162,18 +182,18 @@ export default function ApprovalPage() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         {d.userId}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">{d.title}</td>
-                      <td className="px-6 py-4 whitespace-nowrap max-w-md overflow-auto">
+                      <td className="px-6 py-4">{d.title}</td>
+                      <td className="px-6 py-4 max-w-md overflow-auto">
                         {d.body}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4 ">
                         <Link to={`/approvePost/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Approve
                           </button>
                         </Link>
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
+                      <td className="px-6 py-4">
                         <Link to={`/denyPost/${d.id}`}>
                           <button className="bg-customRed hover:bg-hoverRed text-white font-bold py-2 px-4 rounded">
                             Deny
