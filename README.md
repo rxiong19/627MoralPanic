@@ -14,6 +14,12 @@ Step 6: Run the command "npm run dev"  and you should be able to see the site on
 
 Step 7: Have fun and play around!
 
+## Admin Account
+
+Email: admin@moraldisco.com
+
+Password: racheliscool
+
 
 ## Demo
 
