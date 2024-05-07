@@ -15,4 +15,8 @@ Step 5: Have fun and play around!
 
 ## Demo
 
+Here's the Home page
+![Screen Recording 2024-05-06 at 6 53 30 PM](https://github.com/rxiong19/627MoralPanic/assets/47922282/d1f2f1ec-6a36-4722-8f1f-24f5995c3a84)
 
+Resource page
+![Screen Recording 2024-05-06 at 7 04 34 PM](https://github.com/rxiong19/627MoralPanic/assets/47922282/9316c3d4-6325-4fad-9341-f319917a1e86)
