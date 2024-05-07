@@ -6,7 +6,7 @@ Step 1: Clone this GitHub repo and open it in VS Code.
 
 Step 2: Open the terminal and run "cd blog-tutorial" to get into the project folder
 
-Step 3: If you open the Prisma folder and see there's a .db file, please delete it and run the command "npx prisma migrate dev --name <anyname>"
+Step 3: If you open the Prisma folder and see there's a .db file, please delete it and run the command "npx prisma migrate dev"
 
 Step 5: run the command "npm install" to install all the libraries and packages
 
