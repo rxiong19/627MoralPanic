@@ -46,17 +46,17 @@ const SelectionPage = () => {
         </div>
 
         {isAdmin ? (
-          <div className="flex flex-col justify-center items-center space-y-4">
+          <div className="flex flex-col justify-center items-center space-y-4 max-w-md mx-auto">
             <div className="w-full">
               <Link to="/approval" className="w-full">
-                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded w-full">
+                <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-20 rounded w-full">
                   Approve Users/Posts
                 </button>
               </Link>
             </div>
             <div className="w-full">
               <Link to="new" className="w-full">
-                <button className="bg-customRed hover:bg-hoverRed justify-center items-center text-white font-bold py-10 px-4 rounded w-full">
+                <button className="bg-customRed hover:bg-hoverRed justify-center text-white font-bold py-10 px-20 rounded w-full">
                   Create New Topic
                 </button>
               </Link>
